@@ -64,6 +64,8 @@ class WifiFinger;
 class PlaceSemanticRequest;
 class PoiProbability;
 class PlaceSemanticResponse;
+class POIMatchRequest;
+class POIMatchResponse;
 class NuomiUserPreferenceRequest;
 class ScoreInfo;
 class FeatureInfo;
@@ -76,6 +78,9 @@ class GetAOIResponse;
 class GetNearPoiRequest;
 class PoiInfo;
 class GetNearPoiResponse;
+class NuomiBuy2BuyRequest;
+class NuomiBuy2BuyResponse;
+class NuomiMerchantItemRequest;
 
 enum UserPreferenceSourceType {
   MAP_CATEGORY = 0,
@@ -1092,21 +1097,41 @@ class GetRegularStayPointRequest : public ::google::protobuf::Message {
   inline const ::google::protobuf::RepeatedField<int>& type() const;
   inline ::google::protobuf::RepeatedField<int>* mutable_type();
   
+  // optional double x = 4;
+  inline bool has_x() const;
+  inline void clear_x();
+  static const int kXFieldNumber = 4;
+  inline double x() const;
+  inline void set_x(double value);
+  
+  // optional double y = 5;
+  inline bool has_y() const;
+  inline void clear_y();
+  static const int kYFieldNumber = 5;
+  inline double y() const;
+  inline void set_y(double value);
+  
   // @@protoc_insertion_point(class_scope:lbs.da.openservice.GetRegularStayPointRequest)
  private:
   inline void set_has_header();
   inline void clear_has_header();
   inline void set_has_cuid();
   inline void clear_has_cuid();
+  inline void set_has_x();
+  inline void clear_has_x();
+  inline void set_has_y();
+  inline void clear_has_y();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   ::lbs::da::openservice::RequestHeader* header_;
   ::std::string* cuid_;
   ::google::protobuf::RepeatedField<int> type_;
+  double x_;
+  double y_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   friend void  protobuf_AddDesc_pbrpc_2eproto();
   friend void protobuf_AssignDesc_pbrpc_2eproto();
@@ -3982,7 +4007,7 @@ class WifiFinger : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required string mac_addr = 1;
+  // optional string mac_addr = 1;
   inline bool has_mac_addr() const;
   inline void clear_mac_addr();
   static const int kMacAddrFieldNumber = 1;
@@ -3993,10 +4018,17 @@ class WifiFinger : public ::google::protobuf::Message {
   inline ::std::string* mutable_mac_addr();
   inline ::std::string* release_mac_addr();
   
-  // required int32 strength = 2;
+  // optional int64 int_mac = 2;
+  inline bool has_int_mac() const;
+  inline void clear_int_mac();
+  static const int kIntMacFieldNumber = 2;
+  inline ::google::protobuf::int64 int_mac() const;
+  inline void set_int_mac(::google::protobuf::int64 value);
+  
+  // required int32 strength = 3;
   inline bool has_strength() const;
   inline void clear_strength();
-  static const int kStrengthFieldNumber = 2;
+  static const int kStrengthFieldNumber = 3;
   inline ::google::protobuf::int32 strength() const;
   inline void set_strength(::google::protobuf::int32 value);
   
@@ -4004,16 +4036,19 @@ class WifiFinger : public ::google::protobuf::Message {
  private:
   inline void set_has_mac_addr();
   inline void clear_has_mac_addr();
+  inline void set_has_int_mac();
+  inline void clear_has_int_mac();
   inline void set_has_strength();
   inline void clear_has_strength();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
   ::std::string* mac_addr_;
+  ::google::protobuf::int64 int_mac_;
   ::google::protobuf::int32 strength_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   friend void  protobuf_AddDesc_pbrpc_2eproto();
   friend void protobuf_AssignDesc_pbrpc_2eproto();
@@ -4123,12 +4158,12 @@ class PlaceSemanticRequest : public ::google::protobuf::Message {
   inline ::std::string* mutable_cuid();
   inline ::std::string* release_cuid();
   
-  // optional int32 distance = 6;
-  inline bool has_distance() const;
-  inline void clear_distance();
-  static const int kDistanceFieldNumber = 6;
-  inline ::google::protobuf::int32 distance() const;
-  inline void set_distance(::google::protobuf::int32 value);
+  // optional int32 accuracy = 6;
+  inline bool has_accuracy() const;
+  inline void clear_accuracy();
+  static const int kAccuracyFieldNumber = 6;
+  inline ::google::protobuf::int32 accuracy() const;
+  inline void set_accuracy(::google::protobuf::int32 value);
   
   // optional double similarity_threadhold = 7;
   inline bool has_similarity_threadhold() const;
@@ -4137,16 +4172,12 @@ class PlaceSemanticRequest : public ::google::protobuf::Message {
   inline double similarity_threadhold() const;
   inline void set_similarity_threadhold(double value);
   
-  // optional string algorithm_id = 8;
-  inline bool has_algorithm_id() const;
-  inline void clear_algorithm_id();
-  static const int kAlgorithmIdFieldNumber = 8;
-  inline const ::std::string& algorithm_id() const;
-  inline void set_algorithm_id(const ::std::string& value);
-  inline void set_algorithm_id(const char* value);
-  inline void set_algorithm_id(const char* value, size_t size);
-  inline ::std::string* mutable_algorithm_id();
-  inline ::std::string* release_algorithm_id();
+  // optional int32 topn = 8;
+  inline bool has_topn() const;
+  inline void clear_topn();
+  static const int kTopnFieldNumber = 8;
+  inline ::google::protobuf::int32 topn() const;
+  inline void set_topn(::google::protobuf::int32 value);
   
   // @@protoc_insertion_point(class_scope:lbs.da.openservice.PlaceSemanticRequest)
  private:
@@ -4158,12 +4189,12 @@ class PlaceSemanticRequest : public ::google::protobuf::Message {
   inline void clear_has_latitude();
   inline void set_has_cuid();
   inline void clear_has_cuid();
-  inline void set_has_distance();
-  inline void clear_has_distance();
+  inline void set_has_accuracy();
+  inline void clear_has_accuracy();
   inline void set_has_similarity_threadhold();
   inline void clear_has_similarity_threadhold();
-  inline void set_has_algorithm_id();
-  inline void clear_has_algorithm_id();
+  inline void set_has_topn();
+  inline void clear_has_topn();
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
@@ -4173,8 +4204,8 @@ class PlaceSemanticRequest : public ::google::protobuf::Message {
   double latitude_;
   ::std::string* cuid_;
   double similarity_threadhold_;
-  ::std::string* algorithm_id_;
-  ::google::protobuf::int32 distance_;
+  ::google::protobuf::int32 accuracy_;
+  ::google::protobuf::int32 topn_;
   
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
@@ -4338,22 +4369,6 @@ class PlaceSemanticResponse : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // repeated string aoi_id = 1;
-  inline int aoi_id_size() const;
-  inline void clear_aoi_id();
-  static const int kAoiIdFieldNumber = 1;
-  inline const ::std::string& aoi_id(int index) const;
-  inline ::std::string* mutable_aoi_id(int index);
-  inline void set_aoi_id(int index, const ::std::string& value);
-  inline void set_aoi_id(int index, const char* value);
-  inline void set_aoi_id(int index, const char* value, size_t size);
-  inline ::std::string* add_aoi_id();
-  inline void add_aoi_id(const ::std::string& value);
-  inline void add_aoi_id(const char* value);
-  inline void add_aoi_id(const char* value, size_t size);
-  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& aoi_id() const;
-  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_aoi_id();
-  
   // repeated .lbs.da.openservice.PoiProbability poi_prob_list = 2;
   inline int poi_prob_list_size() const;
   inline void clear_poi_prob_list();
@@ -4371,11 +4386,10 @@ class PlaceSemanticResponse : public ::google::protobuf::Message {
   
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   
-  ::google::protobuf::RepeatedPtrField< ::std::string> aoi_id_;
   ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::PoiProbability > poi_prob_list_;
   
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
   
   friend void  protobuf_AddDesc_pbrpc_2eproto();
   friend void protobuf_AssignDesc_pbrpc_2eproto();
@@ -4383,6 +4397,230 @@ class PlaceSemanticResponse : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static PlaceSemanticResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class POIMatchRequest : public ::google::protobuf::Message {
+ public:
+  POIMatchRequest();
+  virtual ~POIMatchRequest();
+  
+  POIMatchRequest(const POIMatchRequest& from);
+  
+  inline POIMatchRequest& operator=(const POIMatchRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const POIMatchRequest& default_instance();
+  
+  void Swap(POIMatchRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  POIMatchRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const POIMatchRequest& from);
+  void MergeFrom(const POIMatchRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .lbs.da.openservice.RequestHeader header = 1;
+  inline bool has_header() const;
+  inline void clear_header();
+  static const int kHeaderFieldNumber = 1;
+  inline const ::lbs::da::openservice::RequestHeader& header() const;
+  inline ::lbs::da::openservice::RequestHeader* mutable_header();
+  inline ::lbs::da::openservice::RequestHeader* release_header();
+  
+  // repeated uint64 wifi_finger = 2;
+  inline int wifi_finger_size() const;
+  inline void clear_wifi_finger();
+  static const int kWifiFingerFieldNumber = 2;
+  inline ::google::protobuf::uint64 wifi_finger(int index) const;
+  inline void set_wifi_finger(int index, ::google::protobuf::uint64 value);
+  inline void add_wifi_finger(::google::protobuf::uint64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+      wifi_finger() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+      mutable_wifi_finger();
+  
+  // repeated string pois = 3;
+  inline int pois_size() const;
+  inline void clear_pois();
+  static const int kPoisFieldNumber = 3;
+  inline const ::std::string& pois(int index) const;
+  inline ::std::string* mutable_pois(int index);
+  inline void set_pois(int index, const ::std::string& value);
+  inline void set_pois(int index, const char* value);
+  inline void set_pois(int index, const char* value, size_t size);
+  inline ::std::string* add_pois();
+  inline void add_pois(const ::std::string& value);
+  inline void add_pois(const char* value);
+  inline void add_pois(const char* value, size_t size);
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& pois() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_pois();
+  
+  // repeated int32 match_finger_offsets = 5;
+  inline int match_finger_offsets_size() const;
+  inline void clear_match_finger_offsets();
+  static const int kMatchFingerOffsetsFieldNumber = 5;
+  inline ::google::protobuf::int32 match_finger_offsets(int index) const;
+  inline void set_match_finger_offsets(int index, ::google::protobuf::int32 value);
+  inline void add_match_finger_offsets(::google::protobuf::int32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      match_finger_offsets() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_match_finger_offsets();
+  
+  // repeated int32 match_finger_counts = 6;
+  inline int match_finger_counts_size() const;
+  inline void clear_match_finger_counts();
+  static const int kMatchFingerCountsFieldNumber = 6;
+  inline ::google::protobuf::int32 match_finger_counts(int index) const;
+  inline void set_match_finger_counts(int index, ::google::protobuf::int32 value);
+  inline void add_match_finger_counts(::google::protobuf::int32 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      match_finger_counts() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_match_finger_counts();
+  
+  // @@protoc_insertion_point(class_scope:lbs.da.openservice.POIMatchRequest)
+ private:
+  inline void set_has_header();
+  inline void clear_has_header();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::lbs::da::openservice::RequestHeader* header_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint64 > wifi_finger_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> pois_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > match_finger_offsets_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > match_finger_counts_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_pbrpc_2eproto();
+  friend void protobuf_AssignDesc_pbrpc_2eproto();
+  friend void protobuf_ShutdownFile_pbrpc_2eproto();
+  
+  void InitAsDefaultInstance();
+  static POIMatchRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class POIMatchResponse : public ::google::protobuf::Message {
+ public:
+  POIMatchResponse();
+  virtual ~POIMatchResponse();
+  
+  POIMatchResponse(const POIMatchResponse& from);
+  
+  inline POIMatchResponse& operator=(const POIMatchResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const POIMatchResponse& default_instance();
+  
+  void Swap(POIMatchResponse* other);
+  
+  // implements Message ----------------------------------------------
+  
+  POIMatchResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const POIMatchResponse& from);
+  void MergeFrom(const POIMatchResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .lbs.da.openservice.PoiProbability probabilities = 1;
+  inline int probabilities_size() const;
+  inline void clear_probabilities();
+  static const int kProbabilitiesFieldNumber = 1;
+  inline const ::lbs::da::openservice::PoiProbability& probabilities(int index) const;
+  inline ::lbs::da::openservice::PoiProbability* mutable_probabilities(int index);
+  inline ::lbs::da::openservice::PoiProbability* add_probabilities();
+  inline const ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::PoiProbability >&
+      probabilities() const;
+  inline ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::PoiProbability >*
+      mutable_probabilities();
+  
+  // @@protoc_insertion_point(class_scope:lbs.da.openservice.POIMatchResponse)
+ private:
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::PoiProbability > probabilities_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_pbrpc_2eproto();
+  friend void protobuf_AssignDesc_pbrpc_2eproto();
+  friend void protobuf_ShutdownFile_pbrpc_2eproto();
+  
+  void InitAsDefaultInstance();
+  static POIMatchResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -5711,6 +5949,515 @@ class GetNearPoiResponse : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static GetNearPoiResponse* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class NuomiBuy2BuyRequest : public ::google::protobuf::Message {
+ public:
+  NuomiBuy2BuyRequest();
+  virtual ~NuomiBuy2BuyRequest();
+  
+  NuomiBuy2BuyRequest(const NuomiBuy2BuyRequest& from);
+  
+  inline NuomiBuy2BuyRequest& operator=(const NuomiBuy2BuyRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NuomiBuy2BuyRequest& default_instance();
+  
+  void Swap(NuomiBuy2BuyRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  NuomiBuy2BuyRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const NuomiBuy2BuyRequest& from);
+  void MergeFrom(const NuomiBuy2BuyRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .lbs.da.openservice.RequestHeader header = 1;
+  inline bool has_header() const;
+  inline void clear_header();
+  static const int kHeaderFieldNumber = 1;
+  inline const ::lbs::da::openservice::RequestHeader& header() const;
+  inline ::lbs::da::openservice::RequestHeader* mutable_header();
+  inline ::lbs::da::openservice::RequestHeader* release_header();
+  
+  // optional .lbs.da.openservice.NuomiUserPreferenceRequest user_preference_req = 2;
+  inline bool has_user_preference_req() const;
+  inline void clear_user_preference_req();
+  static const int kUserPreferenceReqFieldNumber = 2;
+  inline const ::lbs::da::openservice::NuomiUserPreferenceRequest& user_preference_req() const;
+  inline ::lbs::da::openservice::NuomiUserPreferenceRequest* mutable_user_preference_req();
+  inline ::lbs::da::openservice::NuomiUserPreferenceRequest* release_user_preference_req();
+  
+  // optional .lbs.da.openservice.NuomiMerchantItemRequest mert_req = 3;
+  inline bool has_mert_req() const;
+  inline void clear_mert_req();
+  static const int kMertReqFieldNumber = 3;
+  inline const ::lbs::da::openservice::NuomiMerchantItemRequest& mert_req() const;
+  inline ::lbs::da::openservice::NuomiMerchantItemRequest* mutable_mert_req();
+  inline ::lbs::da::openservice::NuomiMerchantItemRequest* release_mert_req();
+  
+  // @@protoc_insertion_point(class_scope:lbs.da.openservice.NuomiBuy2BuyRequest)
+ private:
+  inline void set_has_header();
+  inline void clear_has_header();
+  inline void set_has_user_preference_req();
+  inline void clear_has_user_preference_req();
+  inline void set_has_mert_req();
+  inline void clear_has_mert_req();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::lbs::da::openservice::RequestHeader* header_;
+  ::lbs::da::openservice::NuomiUserPreferenceRequest* user_preference_req_;
+  ::lbs::da::openservice::NuomiMerchantItemRequest* mert_req_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_pbrpc_2eproto();
+  friend void protobuf_AssignDesc_pbrpc_2eproto();
+  friend void protobuf_ShutdownFile_pbrpc_2eproto();
+  
+  void InitAsDefaultInstance();
+  static NuomiBuy2BuyRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class NuomiBuy2BuyResponse : public ::google::protobuf::Message {
+ public:
+  NuomiBuy2BuyResponse();
+  virtual ~NuomiBuy2BuyResponse();
+  
+  NuomiBuy2BuyResponse(const NuomiBuy2BuyResponse& from);
+  
+  inline NuomiBuy2BuyResponse& operator=(const NuomiBuy2BuyResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NuomiBuy2BuyResponse& default_instance();
+  
+  void Swap(NuomiBuy2BuyResponse* other);
+  
+  // implements Message ----------------------------------------------
+  
+  NuomiBuy2BuyResponse* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const NuomiBuy2BuyResponse& from);
+  void MergeFrom(const NuomiBuy2BuyResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional int32 status = 1;
+  inline bool has_status() const;
+  inline void clear_status();
+  static const int kStatusFieldNumber = 1;
+  inline ::google::protobuf::int32 status() const;
+  inline void set_status(::google::protobuf::int32 value);
+  
+  // optional bytes err_str = 2;
+  inline bool has_err_str() const;
+  inline void clear_err_str();
+  static const int kErrStrFieldNumber = 2;
+  inline const ::std::string& err_str() const;
+  inline void set_err_str(const ::std::string& value);
+  inline void set_err_str(const char* value);
+  inline void set_err_str(const void* value, size_t size);
+  inline ::std::string* mutable_err_str();
+  inline ::std::string* release_err_str();
+  
+  // optional .lbs.da.openservice.NuomiUserPreferenceResponse user_preference_rsp = 3;
+  inline bool has_user_preference_rsp() const;
+  inline void clear_user_preference_rsp();
+  static const int kUserPreferenceRspFieldNumber = 3;
+  inline const ::lbs::da::openservice::NuomiUserPreferenceResponse& user_preference_rsp() const;
+  inline ::lbs::da::openservice::NuomiUserPreferenceResponse* mutable_user_preference_rsp();
+  inline ::lbs::da::openservice::NuomiUserPreferenceResponse* release_user_preference_rsp();
+  
+  // optional .lbs.da.openservice.GetBNItemsResponse mert_rsp = 4;
+  inline bool has_mert_rsp() const;
+  inline void clear_mert_rsp();
+  static const int kMertRspFieldNumber = 4;
+  inline const ::lbs::da::openservice::GetBNItemsResponse& mert_rsp() const;
+  inline ::lbs::da::openservice::GetBNItemsResponse* mutable_mert_rsp();
+  inline ::lbs::da::openservice::GetBNItemsResponse* release_mert_rsp();
+  
+  // @@protoc_insertion_point(class_scope:lbs.da.openservice.NuomiBuy2BuyResponse)
+ private:
+  inline void set_has_status();
+  inline void clear_has_status();
+  inline void set_has_err_str();
+  inline void clear_has_err_str();
+  inline void set_has_user_preference_rsp();
+  inline void clear_has_user_preference_rsp();
+  inline void set_has_mert_rsp();
+  inline void clear_has_mert_rsp();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::std::string* err_str_;
+  ::lbs::da::openservice::NuomiUserPreferenceResponse* user_preference_rsp_;
+  ::lbs::da::openservice::GetBNItemsResponse* mert_rsp_;
+  ::google::protobuf::int32 status_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_pbrpc_2eproto();
+  friend void protobuf_AssignDesc_pbrpc_2eproto();
+  friend void protobuf_ShutdownFile_pbrpc_2eproto();
+  
+  void InitAsDefaultInstance();
+  static NuomiBuy2BuyResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class NuomiMerchantItemRequest : public ::google::protobuf::Message {
+ public:
+  NuomiMerchantItemRequest();
+  virtual ~NuomiMerchantItemRequest();
+  
+  NuomiMerchantItemRequest(const NuomiMerchantItemRequest& from);
+  
+  inline NuomiMerchantItemRequest& operator=(const NuomiMerchantItemRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const NuomiMerchantItemRequest& default_instance();
+  
+  void Swap(NuomiMerchantItemRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  NuomiMerchantItemRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const NuomiMerchantItemRequest& from);
+  void MergeFrom(const NuomiMerchantItemRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .lbs.da.openservice.RequestHeader header = 1;
+  inline bool has_header() const;
+  inline void clear_header();
+  static const int kHeaderFieldNumber = 1;
+  inline const ::lbs::da::openservice::RequestHeader& header() const;
+  inline ::lbs::da::openservice::RequestHeader* mutable_header();
+  inline ::lbs::da::openservice::RequestHeader* release_header();
+  
+  // optional int32 source = 2;
+  inline bool has_source() const;
+  inline void clear_source();
+  static const int kSourceFieldNumber = 2;
+  inline ::google::protobuf::int32 source() const;
+  inline void set_source(::google::protobuf::int32 value);
+  
+  // optional bytes userid = 3;
+  inline bool has_userid() const;
+  inline void clear_userid();
+  static const int kUseridFieldNumber = 3;
+  inline const ::std::string& userid() const;
+  inline void set_userid(const ::std::string& value);
+  inline void set_userid(const char* value);
+  inline void set_userid(const void* value, size_t size);
+  inline ::std::string* mutable_userid();
+  inline ::std::string* release_userid();
+  
+  // optional bytes algorithmId = 4;
+  inline bool has_algorithmid() const;
+  inline void clear_algorithmid();
+  static const int kAlgorithmIdFieldNumber = 4;
+  inline const ::std::string& algorithmid() const;
+  inline void set_algorithmid(const ::std::string& value);
+  inline void set_algorithmid(const char* value);
+  inline void set_algorithmid(const void* value, size_t size);
+  inline ::std::string* mutable_algorithmid();
+  inline ::std::string* release_algorithmid();
+  
+  // optional int32 limit = 5;
+  inline bool has_limit() const;
+  inline void clear_limit();
+  static const int kLimitFieldNumber = 5;
+  inline ::google::protobuf::int32 limit() const;
+  inline void set_limit(::google::protobuf::int32 value);
+  
+  // optional int64 deal_id = 6;
+  inline bool has_deal_id() const;
+  inline void clear_deal_id();
+  static const int kDealIdFieldNumber = 6;
+  inline ::google::protobuf::int64 deal_id() const;
+  inline void set_deal_id(::google::protobuf::int64 value);
+  
+  // repeated int64 merchant_id = 7;
+  inline int merchant_id_size() const;
+  inline void clear_merchant_id();
+  static const int kMerchantIdFieldNumber = 7;
+  inline ::google::protobuf::int64 merchant_id(int index) const;
+  inline void set_merchant_id(int index, ::google::protobuf::int64 value);
+  inline void add_merchant_id(::google::protobuf::int64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+      merchant_id() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+      mutable_merchant_id();
+  
+  // optional int32 deal_num = 8;
+  inline bool has_deal_num() const;
+  inline void clear_deal_num();
+  static const int kDealNumFieldNumber = 8;
+  inline ::google::protobuf::int32 deal_num() const;
+  inline void set_deal_num(::google::protobuf::int32 value);
+  
+  // optional bytes coor_sys = 9;
+  inline bool has_coor_sys() const;
+  inline void clear_coor_sys();
+  static const int kCoorSysFieldNumber = 9;
+  inline const ::std::string& coor_sys() const;
+  inline void set_coor_sys(const ::std::string& value);
+  inline void set_coor_sys(const char* value);
+  inline void set_coor_sys(const void* value, size_t size);
+  inline ::std::string* mutable_coor_sys();
+  inline ::std::string* release_coor_sys();
+  
+  // optional float x = 10;
+  inline bool has_x() const;
+  inline void clear_x();
+  static const int kXFieldNumber = 10;
+  inline float x() const;
+  inline void set_x(float value);
+  
+  // optional float y = 11;
+  inline bool has_y() const;
+  inline void clear_y();
+  static const int kYFieldNumber = 11;
+  inline float y() const;
+  inline void set_y(float value);
+  
+  // optional int64 area_id = 12;
+  inline bool has_area_id() const;
+  inline void clear_area_id();
+  static const int kAreaIdFieldNumber = 12;
+  inline ::google::protobuf::int64 area_id() const;
+  inline void set_area_id(::google::protobuf::int64 value);
+  
+  // repeated int64 vec_catg = 13;
+  inline int vec_catg_size() const;
+  inline void clear_vec_catg();
+  static const int kVecCatgFieldNumber = 13;
+  inline ::google::protobuf::int64 vec_catg(int index) const;
+  inline void set_vec_catg(int index, ::google::protobuf::int64 value);
+  inline void add_vec_catg(::google::protobuf::int64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+      vec_catg() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+      mutable_vec_catg();
+  
+  // repeated int64 vec_subcatg = 14;
+  inline int vec_subcatg_size() const;
+  inline void clear_vec_subcatg();
+  static const int kVecSubcatgFieldNumber = 14;
+  inline ::google::protobuf::int64 vec_subcatg(int index) const;
+  inline void set_vec_subcatg(int index, ::google::protobuf::int64 value);
+  inline void add_vec_subcatg(::google::protobuf::int64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+      vec_subcatg() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+      mutable_vec_subcatg();
+  
+  // repeated int64 vec_thdcatg = 15;
+  inline int vec_thdcatg_size() const;
+  inline void clear_vec_thdcatg();
+  static const int kVecThdcatgFieldNumber = 15;
+  inline ::google::protobuf::int64 vec_thdcatg(int index) const;
+  inline void set_vec_thdcatg(int index, ::google::protobuf::int64 value);
+  inline void add_vec_thdcatg(::google::protobuf::int64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+      vec_thdcatg() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+      mutable_vec_thdcatg();
+  
+  // repeated int64 vec_shop_dist = 16;
+  inline int vec_shop_dist_size() const;
+  inline void clear_vec_shop_dist();
+  static const int kVecShopDistFieldNumber = 16;
+  inline ::google::protobuf::int64 vec_shop_dist(int index) const;
+  inline void set_vec_shop_dist(int index, ::google::protobuf::int64 value);
+  inline void add_vec_shop_dist(::google::protobuf::int64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+      vec_shop_dist() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+      mutable_vec_shop_dist();
+  
+  // repeated int64 vec_shop_range = 17;
+  inline int vec_shop_range_size() const;
+  inline void clear_vec_shop_range();
+  static const int kVecShopRangeFieldNumber = 17;
+  inline ::google::protobuf::int64 vec_shop_range(int index) const;
+  inline void set_vec_shop_range(int index, ::google::protobuf::int64 value);
+  inline void add_vec_shop_range(::google::protobuf::int64 value);
+  inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+      vec_shop_range() const;
+  inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+      mutable_vec_shop_range();
+  
+  // repeated .lbs.da.openservice.Arg args = 18;
+  inline int args_size() const;
+  inline void clear_args();
+  static const int kArgsFieldNumber = 18;
+  inline const ::lbs::da::openservice::Arg& args(int index) const;
+  inline ::lbs::da::openservice::Arg* mutable_args(int index);
+  inline ::lbs::da::openservice::Arg* add_args();
+  inline const ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::Arg >&
+      args() const;
+  inline ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::Arg >*
+      mutable_args();
+  
+  // @@protoc_insertion_point(class_scope:lbs.da.openservice.NuomiMerchantItemRequest)
+ private:
+  inline void set_has_header();
+  inline void clear_has_header();
+  inline void set_has_source();
+  inline void clear_has_source();
+  inline void set_has_userid();
+  inline void clear_has_userid();
+  inline void set_has_algorithmid();
+  inline void clear_has_algorithmid();
+  inline void set_has_limit();
+  inline void clear_has_limit();
+  inline void set_has_deal_id();
+  inline void clear_has_deal_id();
+  inline void set_has_deal_num();
+  inline void clear_has_deal_num();
+  inline void set_has_coor_sys();
+  inline void clear_has_coor_sys();
+  inline void set_has_x();
+  inline void clear_has_x();
+  inline void set_has_y();
+  inline void clear_has_y();
+  inline void set_has_area_id();
+  inline void clear_has_area_id();
+  
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  
+  ::lbs::da::openservice::RequestHeader* header_;
+  ::std::string* userid_;
+  ::google::protobuf::int32 source_;
+  ::google::protobuf::int32 limit_;
+  ::std::string* algorithmid_;
+  ::google::protobuf::int64 deal_id_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > merchant_id_;
+  ::std::string* coor_sys_;
+  ::google::protobuf::int32 deal_num_;
+  float x_;
+  ::google::protobuf::int64 area_id_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > vec_catg_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > vec_subcatg_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > vec_thdcatg_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > vec_shop_dist_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int64 > vec_shop_range_;
+  ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::Arg > args_;
+  float y_;
+  
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(18 + 31) / 32];
+  
+  friend void  protobuf_AddDesc_pbrpc_2eproto();
+  friend void protobuf_AssignDesc_pbrpc_2eproto();
+  friend void protobuf_ShutdownFile_pbrpc_2eproto();
+  
+  void InitAsDefaultInstance();
+  static NuomiMerchantItemRequest* default_instance_;
+};
 // ===================================================================
 
 
@@ -6776,6 +7523,50 @@ GetRegularStayPointRequest::type() const {
 inline ::google::protobuf::RepeatedField<int>*
 GetRegularStayPointRequest::mutable_type() {
   return &type_;
+}
+
+// optional double x = 4;
+inline bool GetRegularStayPointRequest::has_x() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void GetRegularStayPointRequest::set_has_x() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void GetRegularStayPointRequest::clear_has_x() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void GetRegularStayPointRequest::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+inline double GetRegularStayPointRequest::x() const {
+  return x_;
+}
+inline void GetRegularStayPointRequest::set_x(double value) {
+  set_has_x();
+  x_ = value;
+}
+
+// optional double y = 5;
+inline bool GetRegularStayPointRequest::has_y() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void GetRegularStayPointRequest::set_has_y() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void GetRegularStayPointRequest::clear_has_y() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void GetRegularStayPointRequest::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+inline double GetRegularStayPointRequest::y() const {
+  return y_;
+}
+inline void GetRegularStayPointRequest::set_y(double value) {
+  set_has_y();
+  y_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -11145,7 +11936,7 @@ LvTripPlanResponse::mutable_args() {
 
 // WifiFinger
 
-// required string mac_addr = 1;
+// optional string mac_addr = 1;
 inline bool WifiFinger::has_mac_addr() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -11203,15 +11994,37 @@ inline ::std::string* WifiFinger::release_mac_addr() {
   }
 }
 
-// required int32 strength = 2;
-inline bool WifiFinger::has_strength() const {
+// optional int64 int_mac = 2;
+inline bool WifiFinger::has_int_mac() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void WifiFinger::set_has_strength() {
+inline void WifiFinger::set_has_int_mac() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void WifiFinger::clear_has_strength() {
+inline void WifiFinger::clear_has_int_mac() {
   _has_bits_[0] &= ~0x00000002u;
+}
+inline void WifiFinger::clear_int_mac() {
+  int_mac_ = GOOGLE_LONGLONG(0);
+  clear_has_int_mac();
+}
+inline ::google::protobuf::int64 WifiFinger::int_mac() const {
+  return int_mac_;
+}
+inline void WifiFinger::set_int_mac(::google::protobuf::int64 value) {
+  set_has_int_mac();
+  int_mac_ = value;
+}
+
+// required int32 strength = 3;
+inline bool WifiFinger::has_strength() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void WifiFinger::set_has_strength() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void WifiFinger::clear_has_strength() {
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void WifiFinger::clear_strength() {
   strength_ = 0;
@@ -11385,26 +12198,26 @@ inline ::std::string* PlaceSemanticRequest::release_cuid() {
   }
 }
 
-// optional int32 distance = 6;
-inline bool PlaceSemanticRequest::has_distance() const {
+// optional int32 accuracy = 6;
+inline bool PlaceSemanticRequest::has_accuracy() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void PlaceSemanticRequest::set_has_distance() {
+inline void PlaceSemanticRequest::set_has_accuracy() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void PlaceSemanticRequest::clear_has_distance() {
+inline void PlaceSemanticRequest::clear_has_accuracy() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void PlaceSemanticRequest::clear_distance() {
-  distance_ = 0;
-  clear_has_distance();
+inline void PlaceSemanticRequest::clear_accuracy() {
+  accuracy_ = 0;
+  clear_has_accuracy();
 }
-inline ::google::protobuf::int32 PlaceSemanticRequest::distance() const {
-  return distance_;
+inline ::google::protobuf::int32 PlaceSemanticRequest::accuracy() const {
+  return accuracy_;
 }
-inline void PlaceSemanticRequest::set_distance(::google::protobuf::int32 value) {
-  set_has_distance();
-  distance_ = value;
+inline void PlaceSemanticRequest::set_accuracy(::google::protobuf::int32 value) {
+  set_has_accuracy();
+  accuracy_ = value;
 }
 
 // optional double similarity_threadhold = 7;
@@ -11429,62 +12242,26 @@ inline void PlaceSemanticRequest::set_similarity_threadhold(double value) {
   similarity_threadhold_ = value;
 }
 
-// optional string algorithm_id = 8;
-inline bool PlaceSemanticRequest::has_algorithm_id() const {
+// optional int32 topn = 8;
+inline bool PlaceSemanticRequest::has_topn() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
-inline void PlaceSemanticRequest::set_has_algorithm_id() {
+inline void PlaceSemanticRequest::set_has_topn() {
   _has_bits_[0] |= 0x00000080u;
 }
-inline void PlaceSemanticRequest::clear_has_algorithm_id() {
+inline void PlaceSemanticRequest::clear_has_topn() {
   _has_bits_[0] &= ~0x00000080u;
 }
-inline void PlaceSemanticRequest::clear_algorithm_id() {
-  if (algorithm_id_ != &::google::protobuf::internal::kEmptyString) {
-    algorithm_id_->clear();
-  }
-  clear_has_algorithm_id();
+inline void PlaceSemanticRequest::clear_topn() {
+  topn_ = 0;
+  clear_has_topn();
 }
-inline const ::std::string& PlaceSemanticRequest::algorithm_id() const {
-  return *algorithm_id_;
+inline ::google::protobuf::int32 PlaceSemanticRequest::topn() const {
+  return topn_;
 }
-inline void PlaceSemanticRequest::set_algorithm_id(const ::std::string& value) {
-  set_has_algorithm_id();
-  if (algorithm_id_ == &::google::protobuf::internal::kEmptyString) {
-    algorithm_id_ = new ::std::string;
-  }
-  algorithm_id_->assign(value);
-}
-inline void PlaceSemanticRequest::set_algorithm_id(const char* value) {
-  set_has_algorithm_id();
-  if (algorithm_id_ == &::google::protobuf::internal::kEmptyString) {
-    algorithm_id_ = new ::std::string;
-  }
-  algorithm_id_->assign(value);
-}
-inline void PlaceSemanticRequest::set_algorithm_id(const char* value, size_t size) {
-  set_has_algorithm_id();
-  if (algorithm_id_ == &::google::protobuf::internal::kEmptyString) {
-    algorithm_id_ = new ::std::string;
-  }
-  algorithm_id_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* PlaceSemanticRequest::mutable_algorithm_id() {
-  set_has_algorithm_id();
-  if (algorithm_id_ == &::google::protobuf::internal::kEmptyString) {
-    algorithm_id_ = new ::std::string;
-  }
-  return algorithm_id_;
-}
-inline ::std::string* PlaceSemanticRequest::release_algorithm_id() {
-  clear_has_algorithm_id();
-  if (algorithm_id_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = algorithm_id_;
-    algorithm_id_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
+inline void PlaceSemanticRequest::set_topn(::google::protobuf::int32 value) {
+  set_has_topn();
+  topn_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -11575,50 +12352,6 @@ inline void PoiProbability::set_probability(double value) {
 
 // PlaceSemanticResponse
 
-// repeated string aoi_id = 1;
-inline int PlaceSemanticResponse::aoi_id_size() const {
-  return aoi_id_.size();
-}
-inline void PlaceSemanticResponse::clear_aoi_id() {
-  aoi_id_.Clear();
-}
-inline const ::std::string& PlaceSemanticResponse::aoi_id(int index) const {
-  return aoi_id_.Get(index);
-}
-inline ::std::string* PlaceSemanticResponse::mutable_aoi_id(int index) {
-  return aoi_id_.Mutable(index);
-}
-inline void PlaceSemanticResponse::set_aoi_id(int index, const ::std::string& value) {
-  aoi_id_.Mutable(index)->assign(value);
-}
-inline void PlaceSemanticResponse::set_aoi_id(int index, const char* value) {
-  aoi_id_.Mutable(index)->assign(value);
-}
-inline void PlaceSemanticResponse::set_aoi_id(int index, const char* value, size_t size) {
-  aoi_id_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* PlaceSemanticResponse::add_aoi_id() {
-  return aoi_id_.Add();
-}
-inline void PlaceSemanticResponse::add_aoi_id(const ::std::string& value) {
-  aoi_id_.Add()->assign(value);
-}
-inline void PlaceSemanticResponse::add_aoi_id(const char* value) {
-  aoi_id_.Add()->assign(value);
-}
-inline void PlaceSemanticResponse::add_aoi_id(const char* value, size_t size) {
-  aoi_id_.Add()->assign(reinterpret_cast<const char*>(value), size);
-}
-inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
-PlaceSemanticResponse::aoi_id() const {
-  return aoi_id_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::std::string>*
-PlaceSemanticResponse::mutable_aoi_id() {
-  return &aoi_id_;
-}
-
 // repeated .lbs.da.openservice.PoiProbability poi_prob_list = 2;
 inline int PlaceSemanticResponse::poi_prob_list_size() const {
   return poi_prob_list_.size();
@@ -11642,6 +12375,187 @@ PlaceSemanticResponse::poi_prob_list() const {
 inline ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::PoiProbability >*
 PlaceSemanticResponse::mutable_poi_prob_list() {
   return &poi_prob_list_;
+}
+
+// -------------------------------------------------------------------
+
+// POIMatchRequest
+
+// required .lbs.da.openservice.RequestHeader header = 1;
+inline bool POIMatchRequest::has_header() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void POIMatchRequest::set_has_header() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void POIMatchRequest::clear_has_header() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void POIMatchRequest::clear_header() {
+  if (header_ != NULL) header_->::lbs::da::openservice::RequestHeader::Clear();
+  clear_has_header();
+}
+inline const ::lbs::da::openservice::RequestHeader& POIMatchRequest::header() const {
+  return header_ != NULL ? *header_ : *default_instance_->header_;
+}
+inline ::lbs::da::openservice::RequestHeader* POIMatchRequest::mutable_header() {
+  set_has_header();
+  if (header_ == NULL) header_ = new ::lbs::da::openservice::RequestHeader;
+  return header_;
+}
+inline ::lbs::da::openservice::RequestHeader* POIMatchRequest::release_header() {
+  clear_has_header();
+  ::lbs::da::openservice::RequestHeader* temp = header_;
+  header_ = NULL;
+  return temp;
+}
+
+// repeated uint64 wifi_finger = 2;
+inline int POIMatchRequest::wifi_finger_size() const {
+  return wifi_finger_.size();
+}
+inline void POIMatchRequest::clear_wifi_finger() {
+  wifi_finger_.Clear();
+}
+inline ::google::protobuf::uint64 POIMatchRequest::wifi_finger(int index) const {
+  return wifi_finger_.Get(index);
+}
+inline void POIMatchRequest::set_wifi_finger(int index, ::google::protobuf::uint64 value) {
+  wifi_finger_.Set(index, value);
+}
+inline void POIMatchRequest::add_wifi_finger(::google::protobuf::uint64 value) {
+  wifi_finger_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >&
+POIMatchRequest::wifi_finger() const {
+  return wifi_finger_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint64 >*
+POIMatchRequest::mutable_wifi_finger() {
+  return &wifi_finger_;
+}
+
+// repeated string pois = 3;
+inline int POIMatchRequest::pois_size() const {
+  return pois_.size();
+}
+inline void POIMatchRequest::clear_pois() {
+  pois_.Clear();
+}
+inline const ::std::string& POIMatchRequest::pois(int index) const {
+  return pois_.Get(index);
+}
+inline ::std::string* POIMatchRequest::mutable_pois(int index) {
+  return pois_.Mutable(index);
+}
+inline void POIMatchRequest::set_pois(int index, const ::std::string& value) {
+  pois_.Mutable(index)->assign(value);
+}
+inline void POIMatchRequest::set_pois(int index, const char* value) {
+  pois_.Mutable(index)->assign(value);
+}
+inline void POIMatchRequest::set_pois(int index, const char* value, size_t size) {
+  pois_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* POIMatchRequest::add_pois() {
+  return pois_.Add();
+}
+inline void POIMatchRequest::add_pois(const ::std::string& value) {
+  pois_.Add()->assign(value);
+}
+inline void POIMatchRequest::add_pois(const char* value) {
+  pois_.Add()->assign(value);
+}
+inline void POIMatchRequest::add_pois(const char* value, size_t size) {
+  pois_.Add()->assign(reinterpret_cast<const char*>(value), size);
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+POIMatchRequest::pois() const {
+  return pois_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+POIMatchRequest::mutable_pois() {
+  return &pois_;
+}
+
+// repeated int32 match_finger_offsets = 5;
+inline int POIMatchRequest::match_finger_offsets_size() const {
+  return match_finger_offsets_.size();
+}
+inline void POIMatchRequest::clear_match_finger_offsets() {
+  match_finger_offsets_.Clear();
+}
+inline ::google::protobuf::int32 POIMatchRequest::match_finger_offsets(int index) const {
+  return match_finger_offsets_.Get(index);
+}
+inline void POIMatchRequest::set_match_finger_offsets(int index, ::google::protobuf::int32 value) {
+  match_finger_offsets_.Set(index, value);
+}
+inline void POIMatchRequest::add_match_finger_offsets(::google::protobuf::int32 value) {
+  match_finger_offsets_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+POIMatchRequest::match_finger_offsets() const {
+  return match_finger_offsets_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+POIMatchRequest::mutable_match_finger_offsets() {
+  return &match_finger_offsets_;
+}
+
+// repeated int32 match_finger_counts = 6;
+inline int POIMatchRequest::match_finger_counts_size() const {
+  return match_finger_counts_.size();
+}
+inline void POIMatchRequest::clear_match_finger_counts() {
+  match_finger_counts_.Clear();
+}
+inline ::google::protobuf::int32 POIMatchRequest::match_finger_counts(int index) const {
+  return match_finger_counts_.Get(index);
+}
+inline void POIMatchRequest::set_match_finger_counts(int index, ::google::protobuf::int32 value) {
+  match_finger_counts_.Set(index, value);
+}
+inline void POIMatchRequest::add_match_finger_counts(::google::protobuf::int32 value) {
+  match_finger_counts_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+POIMatchRequest::match_finger_counts() const {
+  return match_finger_counts_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+POIMatchRequest::mutable_match_finger_counts() {
+  return &match_finger_counts_;
+}
+
+// -------------------------------------------------------------------
+
+// POIMatchResponse
+
+// repeated .lbs.da.openservice.PoiProbability probabilities = 1;
+inline int POIMatchResponse::probabilities_size() const {
+  return probabilities_.size();
+}
+inline void POIMatchResponse::clear_probabilities() {
+  probabilities_.Clear();
+}
+inline const ::lbs::da::openservice::PoiProbability& POIMatchResponse::probabilities(int index) const {
+  return probabilities_.Get(index);
+}
+inline ::lbs::da::openservice::PoiProbability* POIMatchResponse::mutable_probabilities(int index) {
+  return probabilities_.Mutable(index);
+}
+inline ::lbs::da::openservice::PoiProbability* POIMatchResponse::add_probabilities() {
+  return probabilities_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::PoiProbability >&
+POIMatchResponse::probabilities() const {
+  return probabilities_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::PoiProbability >*
+POIMatchResponse::mutable_probabilities() {
+  return &probabilities_;
 }
 
 // -------------------------------------------------------------------
@@ -13090,6 +14004,775 @@ GetNearPoiResponse::poi_list() const {
 inline ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::PoiInfo >*
 GetNearPoiResponse::mutable_poi_list() {
   return &poi_list_;
+}
+
+// -------------------------------------------------------------------
+
+// NuomiBuy2BuyRequest
+
+// required .lbs.da.openservice.RequestHeader header = 1;
+inline bool NuomiBuy2BuyRequest::has_header() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void NuomiBuy2BuyRequest::set_has_header() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void NuomiBuy2BuyRequest::clear_has_header() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void NuomiBuy2BuyRequest::clear_header() {
+  if (header_ != NULL) header_->::lbs::da::openservice::RequestHeader::Clear();
+  clear_has_header();
+}
+inline const ::lbs::da::openservice::RequestHeader& NuomiBuy2BuyRequest::header() const {
+  return header_ != NULL ? *header_ : *default_instance_->header_;
+}
+inline ::lbs::da::openservice::RequestHeader* NuomiBuy2BuyRequest::mutable_header() {
+  set_has_header();
+  if (header_ == NULL) header_ = new ::lbs::da::openservice::RequestHeader;
+  return header_;
+}
+inline ::lbs::da::openservice::RequestHeader* NuomiBuy2BuyRequest::release_header() {
+  clear_has_header();
+  ::lbs::da::openservice::RequestHeader* temp = header_;
+  header_ = NULL;
+  return temp;
+}
+
+// optional .lbs.da.openservice.NuomiUserPreferenceRequest user_preference_req = 2;
+inline bool NuomiBuy2BuyRequest::has_user_preference_req() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void NuomiBuy2BuyRequest::set_has_user_preference_req() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void NuomiBuy2BuyRequest::clear_has_user_preference_req() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void NuomiBuy2BuyRequest::clear_user_preference_req() {
+  if (user_preference_req_ != NULL) user_preference_req_->::lbs::da::openservice::NuomiUserPreferenceRequest::Clear();
+  clear_has_user_preference_req();
+}
+inline const ::lbs::da::openservice::NuomiUserPreferenceRequest& NuomiBuy2BuyRequest::user_preference_req() const {
+  return user_preference_req_ != NULL ? *user_preference_req_ : *default_instance_->user_preference_req_;
+}
+inline ::lbs::da::openservice::NuomiUserPreferenceRequest* NuomiBuy2BuyRequest::mutable_user_preference_req() {
+  set_has_user_preference_req();
+  if (user_preference_req_ == NULL) user_preference_req_ = new ::lbs::da::openservice::NuomiUserPreferenceRequest;
+  return user_preference_req_;
+}
+inline ::lbs::da::openservice::NuomiUserPreferenceRequest* NuomiBuy2BuyRequest::release_user_preference_req() {
+  clear_has_user_preference_req();
+  ::lbs::da::openservice::NuomiUserPreferenceRequest* temp = user_preference_req_;
+  user_preference_req_ = NULL;
+  return temp;
+}
+
+// optional .lbs.da.openservice.NuomiMerchantItemRequest mert_req = 3;
+inline bool NuomiBuy2BuyRequest::has_mert_req() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void NuomiBuy2BuyRequest::set_has_mert_req() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void NuomiBuy2BuyRequest::clear_has_mert_req() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void NuomiBuy2BuyRequest::clear_mert_req() {
+  if (mert_req_ != NULL) mert_req_->::lbs::da::openservice::NuomiMerchantItemRequest::Clear();
+  clear_has_mert_req();
+}
+inline const ::lbs::da::openservice::NuomiMerchantItemRequest& NuomiBuy2BuyRequest::mert_req() const {
+  return mert_req_ != NULL ? *mert_req_ : *default_instance_->mert_req_;
+}
+inline ::lbs::da::openservice::NuomiMerchantItemRequest* NuomiBuy2BuyRequest::mutable_mert_req() {
+  set_has_mert_req();
+  if (mert_req_ == NULL) mert_req_ = new ::lbs::da::openservice::NuomiMerchantItemRequest;
+  return mert_req_;
+}
+inline ::lbs::da::openservice::NuomiMerchantItemRequest* NuomiBuy2BuyRequest::release_mert_req() {
+  clear_has_mert_req();
+  ::lbs::da::openservice::NuomiMerchantItemRequest* temp = mert_req_;
+  mert_req_ = NULL;
+  return temp;
+}
+
+// -------------------------------------------------------------------
+
+// NuomiBuy2BuyResponse
+
+// optional int32 status = 1;
+inline bool NuomiBuy2BuyResponse::has_status() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void NuomiBuy2BuyResponse::set_has_status() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void NuomiBuy2BuyResponse::clear_has_status() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void NuomiBuy2BuyResponse::clear_status() {
+  status_ = 0;
+  clear_has_status();
+}
+inline ::google::protobuf::int32 NuomiBuy2BuyResponse::status() const {
+  return status_;
+}
+inline void NuomiBuy2BuyResponse::set_status(::google::protobuf::int32 value) {
+  set_has_status();
+  status_ = value;
+}
+
+// optional bytes err_str = 2;
+inline bool NuomiBuy2BuyResponse::has_err_str() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void NuomiBuy2BuyResponse::set_has_err_str() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void NuomiBuy2BuyResponse::clear_has_err_str() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void NuomiBuy2BuyResponse::clear_err_str() {
+  if (err_str_ != &::google::protobuf::internal::kEmptyString) {
+    err_str_->clear();
+  }
+  clear_has_err_str();
+}
+inline const ::std::string& NuomiBuy2BuyResponse::err_str() const {
+  return *err_str_;
+}
+inline void NuomiBuy2BuyResponse::set_err_str(const ::std::string& value) {
+  set_has_err_str();
+  if (err_str_ == &::google::protobuf::internal::kEmptyString) {
+    err_str_ = new ::std::string;
+  }
+  err_str_->assign(value);
+}
+inline void NuomiBuy2BuyResponse::set_err_str(const char* value) {
+  set_has_err_str();
+  if (err_str_ == &::google::protobuf::internal::kEmptyString) {
+    err_str_ = new ::std::string;
+  }
+  err_str_->assign(value);
+}
+inline void NuomiBuy2BuyResponse::set_err_str(const void* value, size_t size) {
+  set_has_err_str();
+  if (err_str_ == &::google::protobuf::internal::kEmptyString) {
+    err_str_ = new ::std::string;
+  }
+  err_str_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* NuomiBuy2BuyResponse::mutable_err_str() {
+  set_has_err_str();
+  if (err_str_ == &::google::protobuf::internal::kEmptyString) {
+    err_str_ = new ::std::string;
+  }
+  return err_str_;
+}
+inline ::std::string* NuomiBuy2BuyResponse::release_err_str() {
+  clear_has_err_str();
+  if (err_str_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = err_str_;
+    err_str_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+
+// optional .lbs.da.openservice.NuomiUserPreferenceResponse user_preference_rsp = 3;
+inline bool NuomiBuy2BuyResponse::has_user_preference_rsp() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void NuomiBuy2BuyResponse::set_has_user_preference_rsp() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void NuomiBuy2BuyResponse::clear_has_user_preference_rsp() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void NuomiBuy2BuyResponse::clear_user_preference_rsp() {
+  if (user_preference_rsp_ != NULL) user_preference_rsp_->::lbs::da::openservice::NuomiUserPreferenceResponse::Clear();
+  clear_has_user_preference_rsp();
+}
+inline const ::lbs::da::openservice::NuomiUserPreferenceResponse& NuomiBuy2BuyResponse::user_preference_rsp() const {
+  return user_preference_rsp_ != NULL ? *user_preference_rsp_ : *default_instance_->user_preference_rsp_;
+}
+inline ::lbs::da::openservice::NuomiUserPreferenceResponse* NuomiBuy2BuyResponse::mutable_user_preference_rsp() {
+  set_has_user_preference_rsp();
+  if (user_preference_rsp_ == NULL) user_preference_rsp_ = new ::lbs::da::openservice::NuomiUserPreferenceResponse;
+  return user_preference_rsp_;
+}
+inline ::lbs::da::openservice::NuomiUserPreferenceResponse* NuomiBuy2BuyResponse::release_user_preference_rsp() {
+  clear_has_user_preference_rsp();
+  ::lbs::da::openservice::NuomiUserPreferenceResponse* temp = user_preference_rsp_;
+  user_preference_rsp_ = NULL;
+  return temp;
+}
+
+// optional .lbs.da.openservice.GetBNItemsResponse mert_rsp = 4;
+inline bool NuomiBuy2BuyResponse::has_mert_rsp() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void NuomiBuy2BuyResponse::set_has_mert_rsp() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void NuomiBuy2BuyResponse::clear_has_mert_rsp() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void NuomiBuy2BuyResponse::clear_mert_rsp() {
+  if (mert_rsp_ != NULL) mert_rsp_->::lbs::da::openservice::GetBNItemsResponse::Clear();
+  clear_has_mert_rsp();
+}
+inline const ::lbs::da::openservice::GetBNItemsResponse& NuomiBuy2BuyResponse::mert_rsp() const {
+  return mert_rsp_ != NULL ? *mert_rsp_ : *default_instance_->mert_rsp_;
+}
+inline ::lbs::da::openservice::GetBNItemsResponse* NuomiBuy2BuyResponse::mutable_mert_rsp() {
+  set_has_mert_rsp();
+  if (mert_rsp_ == NULL) mert_rsp_ = new ::lbs::da::openservice::GetBNItemsResponse;
+  return mert_rsp_;
+}
+inline ::lbs::da::openservice::GetBNItemsResponse* NuomiBuy2BuyResponse::release_mert_rsp() {
+  clear_has_mert_rsp();
+  ::lbs::da::openservice::GetBNItemsResponse* temp = mert_rsp_;
+  mert_rsp_ = NULL;
+  return temp;
+}
+
+// -------------------------------------------------------------------
+
+// NuomiMerchantItemRequest
+
+// required .lbs.da.openservice.RequestHeader header = 1;
+inline bool NuomiMerchantItemRequest::has_header() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_header() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void NuomiMerchantItemRequest::clear_has_header() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void NuomiMerchantItemRequest::clear_header() {
+  if (header_ != NULL) header_->::lbs::da::openservice::RequestHeader::Clear();
+  clear_has_header();
+}
+inline const ::lbs::da::openservice::RequestHeader& NuomiMerchantItemRequest::header() const {
+  return header_ != NULL ? *header_ : *default_instance_->header_;
+}
+inline ::lbs::da::openservice::RequestHeader* NuomiMerchantItemRequest::mutable_header() {
+  set_has_header();
+  if (header_ == NULL) header_ = new ::lbs::da::openservice::RequestHeader;
+  return header_;
+}
+inline ::lbs::da::openservice::RequestHeader* NuomiMerchantItemRequest::release_header() {
+  clear_has_header();
+  ::lbs::da::openservice::RequestHeader* temp = header_;
+  header_ = NULL;
+  return temp;
+}
+
+// optional int32 source = 2;
+inline bool NuomiMerchantItemRequest::has_source() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_source() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void NuomiMerchantItemRequest::clear_has_source() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void NuomiMerchantItemRequest::clear_source() {
+  source_ = 0;
+  clear_has_source();
+}
+inline ::google::protobuf::int32 NuomiMerchantItemRequest::source() const {
+  return source_;
+}
+inline void NuomiMerchantItemRequest::set_source(::google::protobuf::int32 value) {
+  set_has_source();
+  source_ = value;
+}
+
+// optional bytes userid = 3;
+inline bool NuomiMerchantItemRequest::has_userid() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_userid() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void NuomiMerchantItemRequest::clear_has_userid() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void NuomiMerchantItemRequest::clear_userid() {
+  if (userid_ != &::google::protobuf::internal::kEmptyString) {
+    userid_->clear();
+  }
+  clear_has_userid();
+}
+inline const ::std::string& NuomiMerchantItemRequest::userid() const {
+  return *userid_;
+}
+inline void NuomiMerchantItemRequest::set_userid(const ::std::string& value) {
+  set_has_userid();
+  if (userid_ == &::google::protobuf::internal::kEmptyString) {
+    userid_ = new ::std::string;
+  }
+  userid_->assign(value);
+}
+inline void NuomiMerchantItemRequest::set_userid(const char* value) {
+  set_has_userid();
+  if (userid_ == &::google::protobuf::internal::kEmptyString) {
+    userid_ = new ::std::string;
+  }
+  userid_->assign(value);
+}
+inline void NuomiMerchantItemRequest::set_userid(const void* value, size_t size) {
+  set_has_userid();
+  if (userid_ == &::google::protobuf::internal::kEmptyString) {
+    userid_ = new ::std::string;
+  }
+  userid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* NuomiMerchantItemRequest::mutable_userid() {
+  set_has_userid();
+  if (userid_ == &::google::protobuf::internal::kEmptyString) {
+    userid_ = new ::std::string;
+  }
+  return userid_;
+}
+inline ::std::string* NuomiMerchantItemRequest::release_userid() {
+  clear_has_userid();
+  if (userid_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = userid_;
+    userid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+
+// optional bytes algorithmId = 4;
+inline bool NuomiMerchantItemRequest::has_algorithmid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_algorithmid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void NuomiMerchantItemRequest::clear_has_algorithmid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void NuomiMerchantItemRequest::clear_algorithmid() {
+  if (algorithmid_ != &::google::protobuf::internal::kEmptyString) {
+    algorithmid_->clear();
+  }
+  clear_has_algorithmid();
+}
+inline const ::std::string& NuomiMerchantItemRequest::algorithmid() const {
+  return *algorithmid_;
+}
+inline void NuomiMerchantItemRequest::set_algorithmid(const ::std::string& value) {
+  set_has_algorithmid();
+  if (algorithmid_ == &::google::protobuf::internal::kEmptyString) {
+    algorithmid_ = new ::std::string;
+  }
+  algorithmid_->assign(value);
+}
+inline void NuomiMerchantItemRequest::set_algorithmid(const char* value) {
+  set_has_algorithmid();
+  if (algorithmid_ == &::google::protobuf::internal::kEmptyString) {
+    algorithmid_ = new ::std::string;
+  }
+  algorithmid_->assign(value);
+}
+inline void NuomiMerchantItemRequest::set_algorithmid(const void* value, size_t size) {
+  set_has_algorithmid();
+  if (algorithmid_ == &::google::protobuf::internal::kEmptyString) {
+    algorithmid_ = new ::std::string;
+  }
+  algorithmid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* NuomiMerchantItemRequest::mutable_algorithmid() {
+  set_has_algorithmid();
+  if (algorithmid_ == &::google::protobuf::internal::kEmptyString) {
+    algorithmid_ = new ::std::string;
+  }
+  return algorithmid_;
+}
+inline ::std::string* NuomiMerchantItemRequest::release_algorithmid() {
+  clear_has_algorithmid();
+  if (algorithmid_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = algorithmid_;
+    algorithmid_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+
+// optional int32 limit = 5;
+inline bool NuomiMerchantItemRequest::has_limit() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_limit() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void NuomiMerchantItemRequest::clear_has_limit() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void NuomiMerchantItemRequest::clear_limit() {
+  limit_ = 0;
+  clear_has_limit();
+}
+inline ::google::protobuf::int32 NuomiMerchantItemRequest::limit() const {
+  return limit_;
+}
+inline void NuomiMerchantItemRequest::set_limit(::google::protobuf::int32 value) {
+  set_has_limit();
+  limit_ = value;
+}
+
+// optional int64 deal_id = 6;
+inline bool NuomiMerchantItemRequest::has_deal_id() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_deal_id() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void NuomiMerchantItemRequest::clear_has_deal_id() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void NuomiMerchantItemRequest::clear_deal_id() {
+  deal_id_ = GOOGLE_LONGLONG(0);
+  clear_has_deal_id();
+}
+inline ::google::protobuf::int64 NuomiMerchantItemRequest::deal_id() const {
+  return deal_id_;
+}
+inline void NuomiMerchantItemRequest::set_deal_id(::google::protobuf::int64 value) {
+  set_has_deal_id();
+  deal_id_ = value;
+}
+
+// repeated int64 merchant_id = 7;
+inline int NuomiMerchantItemRequest::merchant_id_size() const {
+  return merchant_id_.size();
+}
+inline void NuomiMerchantItemRequest::clear_merchant_id() {
+  merchant_id_.Clear();
+}
+inline ::google::protobuf::int64 NuomiMerchantItemRequest::merchant_id(int index) const {
+  return merchant_id_.Get(index);
+}
+inline void NuomiMerchantItemRequest::set_merchant_id(int index, ::google::protobuf::int64 value) {
+  merchant_id_.Set(index, value);
+}
+inline void NuomiMerchantItemRequest::add_merchant_id(::google::protobuf::int64 value) {
+  merchant_id_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+NuomiMerchantItemRequest::merchant_id() const {
+  return merchant_id_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+NuomiMerchantItemRequest::mutable_merchant_id() {
+  return &merchant_id_;
+}
+
+// optional int32 deal_num = 8;
+inline bool NuomiMerchantItemRequest::has_deal_num() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_deal_num() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void NuomiMerchantItemRequest::clear_has_deal_num() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void NuomiMerchantItemRequest::clear_deal_num() {
+  deal_num_ = 0;
+  clear_has_deal_num();
+}
+inline ::google::protobuf::int32 NuomiMerchantItemRequest::deal_num() const {
+  return deal_num_;
+}
+inline void NuomiMerchantItemRequest::set_deal_num(::google::protobuf::int32 value) {
+  set_has_deal_num();
+  deal_num_ = value;
+}
+
+// optional bytes coor_sys = 9;
+inline bool NuomiMerchantItemRequest::has_coor_sys() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_coor_sys() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void NuomiMerchantItemRequest::clear_has_coor_sys() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void NuomiMerchantItemRequest::clear_coor_sys() {
+  if (coor_sys_ != &::google::protobuf::internal::kEmptyString) {
+    coor_sys_->clear();
+  }
+  clear_has_coor_sys();
+}
+inline const ::std::string& NuomiMerchantItemRequest::coor_sys() const {
+  return *coor_sys_;
+}
+inline void NuomiMerchantItemRequest::set_coor_sys(const ::std::string& value) {
+  set_has_coor_sys();
+  if (coor_sys_ == &::google::protobuf::internal::kEmptyString) {
+    coor_sys_ = new ::std::string;
+  }
+  coor_sys_->assign(value);
+}
+inline void NuomiMerchantItemRequest::set_coor_sys(const char* value) {
+  set_has_coor_sys();
+  if (coor_sys_ == &::google::protobuf::internal::kEmptyString) {
+    coor_sys_ = new ::std::string;
+  }
+  coor_sys_->assign(value);
+}
+inline void NuomiMerchantItemRequest::set_coor_sys(const void* value, size_t size) {
+  set_has_coor_sys();
+  if (coor_sys_ == &::google::protobuf::internal::kEmptyString) {
+    coor_sys_ = new ::std::string;
+  }
+  coor_sys_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* NuomiMerchantItemRequest::mutable_coor_sys() {
+  set_has_coor_sys();
+  if (coor_sys_ == &::google::protobuf::internal::kEmptyString) {
+    coor_sys_ = new ::std::string;
+  }
+  return coor_sys_;
+}
+inline ::std::string* NuomiMerchantItemRequest::release_coor_sys() {
+  clear_has_coor_sys();
+  if (coor_sys_ == &::google::protobuf::internal::kEmptyString) {
+    return NULL;
+  } else {
+    ::std::string* temp = coor_sys_;
+    coor_sys_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    return temp;
+  }
+}
+
+// optional float x = 10;
+inline bool NuomiMerchantItemRequest::has_x() const {
+  return (_has_bits_[0] & 0x00000200u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_x() {
+  _has_bits_[0] |= 0x00000200u;
+}
+inline void NuomiMerchantItemRequest::clear_has_x() {
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline void NuomiMerchantItemRequest::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+inline float NuomiMerchantItemRequest::x() const {
+  return x_;
+}
+inline void NuomiMerchantItemRequest::set_x(float value) {
+  set_has_x();
+  x_ = value;
+}
+
+// optional float y = 11;
+inline bool NuomiMerchantItemRequest::has_y() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_y() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void NuomiMerchantItemRequest::clear_has_y() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void NuomiMerchantItemRequest::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+inline float NuomiMerchantItemRequest::y() const {
+  return y_;
+}
+inline void NuomiMerchantItemRequest::set_y(float value) {
+  set_has_y();
+  y_ = value;
+}
+
+// optional int64 area_id = 12;
+inline bool NuomiMerchantItemRequest::has_area_id() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void NuomiMerchantItemRequest::set_has_area_id() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void NuomiMerchantItemRequest::clear_has_area_id() {
+  _has_bits_[0] &= ~0x00000800u;
+}
+inline void NuomiMerchantItemRequest::clear_area_id() {
+  area_id_ = GOOGLE_LONGLONG(0);
+  clear_has_area_id();
+}
+inline ::google::protobuf::int64 NuomiMerchantItemRequest::area_id() const {
+  return area_id_;
+}
+inline void NuomiMerchantItemRequest::set_area_id(::google::protobuf::int64 value) {
+  set_has_area_id();
+  area_id_ = value;
+}
+
+// repeated int64 vec_catg = 13;
+inline int NuomiMerchantItemRequest::vec_catg_size() const {
+  return vec_catg_.size();
+}
+inline void NuomiMerchantItemRequest::clear_vec_catg() {
+  vec_catg_.Clear();
+}
+inline ::google::protobuf::int64 NuomiMerchantItemRequest::vec_catg(int index) const {
+  return vec_catg_.Get(index);
+}
+inline void NuomiMerchantItemRequest::set_vec_catg(int index, ::google::protobuf::int64 value) {
+  vec_catg_.Set(index, value);
+}
+inline void NuomiMerchantItemRequest::add_vec_catg(::google::protobuf::int64 value) {
+  vec_catg_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+NuomiMerchantItemRequest::vec_catg() const {
+  return vec_catg_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+NuomiMerchantItemRequest::mutable_vec_catg() {
+  return &vec_catg_;
+}
+
+// repeated int64 vec_subcatg = 14;
+inline int NuomiMerchantItemRequest::vec_subcatg_size() const {
+  return vec_subcatg_.size();
+}
+inline void NuomiMerchantItemRequest::clear_vec_subcatg() {
+  vec_subcatg_.Clear();
+}
+inline ::google::protobuf::int64 NuomiMerchantItemRequest::vec_subcatg(int index) const {
+  return vec_subcatg_.Get(index);
+}
+inline void NuomiMerchantItemRequest::set_vec_subcatg(int index, ::google::protobuf::int64 value) {
+  vec_subcatg_.Set(index, value);
+}
+inline void NuomiMerchantItemRequest::add_vec_subcatg(::google::protobuf::int64 value) {
+  vec_subcatg_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+NuomiMerchantItemRequest::vec_subcatg() const {
+  return vec_subcatg_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+NuomiMerchantItemRequest::mutable_vec_subcatg() {
+  return &vec_subcatg_;
+}
+
+// repeated int64 vec_thdcatg = 15;
+inline int NuomiMerchantItemRequest::vec_thdcatg_size() const {
+  return vec_thdcatg_.size();
+}
+inline void NuomiMerchantItemRequest::clear_vec_thdcatg() {
+  vec_thdcatg_.Clear();
+}
+inline ::google::protobuf::int64 NuomiMerchantItemRequest::vec_thdcatg(int index) const {
+  return vec_thdcatg_.Get(index);
+}
+inline void NuomiMerchantItemRequest::set_vec_thdcatg(int index, ::google::protobuf::int64 value) {
+  vec_thdcatg_.Set(index, value);
+}
+inline void NuomiMerchantItemRequest::add_vec_thdcatg(::google::protobuf::int64 value) {
+  vec_thdcatg_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+NuomiMerchantItemRequest::vec_thdcatg() const {
+  return vec_thdcatg_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+NuomiMerchantItemRequest::mutable_vec_thdcatg() {
+  return &vec_thdcatg_;
+}
+
+// repeated int64 vec_shop_dist = 16;
+inline int NuomiMerchantItemRequest::vec_shop_dist_size() const {
+  return vec_shop_dist_.size();
+}
+inline void NuomiMerchantItemRequest::clear_vec_shop_dist() {
+  vec_shop_dist_.Clear();
+}
+inline ::google::protobuf::int64 NuomiMerchantItemRequest::vec_shop_dist(int index) const {
+  return vec_shop_dist_.Get(index);
+}
+inline void NuomiMerchantItemRequest::set_vec_shop_dist(int index, ::google::protobuf::int64 value) {
+  vec_shop_dist_.Set(index, value);
+}
+inline void NuomiMerchantItemRequest::add_vec_shop_dist(::google::protobuf::int64 value) {
+  vec_shop_dist_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+NuomiMerchantItemRequest::vec_shop_dist() const {
+  return vec_shop_dist_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+NuomiMerchantItemRequest::mutable_vec_shop_dist() {
+  return &vec_shop_dist_;
+}
+
+// repeated int64 vec_shop_range = 17;
+inline int NuomiMerchantItemRequest::vec_shop_range_size() const {
+  return vec_shop_range_.size();
+}
+inline void NuomiMerchantItemRequest::clear_vec_shop_range() {
+  vec_shop_range_.Clear();
+}
+inline ::google::protobuf::int64 NuomiMerchantItemRequest::vec_shop_range(int index) const {
+  return vec_shop_range_.Get(index);
+}
+inline void NuomiMerchantItemRequest::set_vec_shop_range(int index, ::google::protobuf::int64 value) {
+  vec_shop_range_.Set(index, value);
+}
+inline void NuomiMerchantItemRequest::add_vec_shop_range(::google::protobuf::int64 value) {
+  vec_shop_range_.Add(value);
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int64 >&
+NuomiMerchantItemRequest::vec_shop_range() const {
+  return vec_shop_range_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int64 >*
+NuomiMerchantItemRequest::mutable_vec_shop_range() {
+  return &vec_shop_range_;
+}
+
+// repeated .lbs.da.openservice.Arg args = 18;
+inline int NuomiMerchantItemRequest::args_size() const {
+  return args_.size();
+}
+inline void NuomiMerchantItemRequest::clear_args() {
+  args_.Clear();
+}
+inline const ::lbs::da::openservice::Arg& NuomiMerchantItemRequest::args(int index) const {
+  return args_.Get(index);
+}
+inline ::lbs::da::openservice::Arg* NuomiMerchantItemRequest::mutable_args(int index) {
+  return args_.Mutable(index);
+}
+inline ::lbs::da::openservice::Arg* NuomiMerchantItemRequest::add_args() {
+  return args_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::Arg >&
+NuomiMerchantItemRequest::args() const {
+  return args_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::lbs::da::openservice::Arg >*
+NuomiMerchantItemRequest::mutable_args() {
+  return &args_;
 }
 
 

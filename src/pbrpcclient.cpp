@@ -50,8 +50,20 @@ int main(int argc, char **argv) {
 	
 	freopen("./log/pbrpc.log.wf", "a", stderr);
 	//构造请求
-	string filestr = getfilestr(testdata);
-	vector<string> filestr_array = split_string(filestr, "##########");
+	/*string filestr = getfilestr(testdata);
+	vector<string> filestr_array = split_string(filestr, "##########");*/
+	std::ifstream ifs;
+	ifs.open(testdata.c_str());
+	Json::Reader reader;
+	Json::Value jsondata;
+	if (!reader.parse(ifs, jsondata, false)) { 
+		return -1; 
+	}
+	vector<string> filestr_array;
+	for (int i = 0; i < jsondata.size(); i ++) {
+		filestr_array.push_back(jsondata[i].toStyledString());
+	}
+	
 	for (size_t i=0; i<filestr_array.size(); i++) {
 		//初始化客户端
 		google::protobuf::RpcChannel *rpc_channel;
@@ -70,6 +82,10 @@ int main(int argc, char **argv) {
 			rpc_client->set_options(options);
 			rpc_client->Start();
 			baidu::hulu::pbrpc::RpcChannelOptions channel_options;
+			//set tmout with a large number
+			channel_options.connect_timeout_ms = 50000000;
+			channel_options.session_timeout_ms = 50000000;
+			channel_options.once_talk_timeout_ms = 50000000;
 			rpc_channel = new baidu::hulu::pbrpc::RpcChannel(ip_port, rpc_client);
 			(static_cast<baidu::hulu::pbrpc::RpcChannel*> (rpc_channel))->set_options(channel_options);
 			cntl = new baidu::hulu::pbrpc::RpcClientContext();

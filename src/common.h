@@ -41,6 +41,12 @@
 #include <algorithm>
 #include <pthread.h>
 #include <unistd.h>
+#include <cstdio>
+
+//json
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
 
 #include "user_proto.h"
 
@@ -75,7 +81,12 @@
 #include "hulu/pbrpc/common.h"
 #include "hulu/pbrpc/rpc_client_controller.h"
 
+//jsoncpp
+#include "json/json.h"
+
 using namespace std;
+using namespace rapidjson;
+
 extern pthread_mutex_t mutex;
 extern long total_req;
 extern long total_res;
@@ -85,12 +96,14 @@ extern long below_10;
 extern long between_10_20;
 extern long between_20_30;
 extern long over_30;
-extern long total_res_time;
+extern double total_res_time;
 
 /*google::protobuf::Message* createMessage(const string& type_name);
 const google::protobuf::MethodDescriptor* FindMethodByName(const string& service_name, const string& method_name);
 google::protobuf::Message* GetMessageByMethodDescriptor(const google::protobuf::MethodDescriptor* descripter, bool is_input);
 google::protobuf::Message* GetMessageByName(const string& service_name, const string& method_name, bool is_input);*/
+
+//inline functions for performance optimization
 inline google::protobuf::Message* createMessage(const string& type_name) {
 	google::protobuf::Message* message = NULL;
 	const google::protobuf::Descriptor* descriptor = google::protobuf::DescriptorPool::generated_pool()->FindMessageTypeByName(type_name);
@@ -142,8 +155,8 @@ inline google::protobuf::Message* GetMessageByName(const string& service_name, c
 void callback (google::protobuf::Message* request_msg, google::protobuf::Message* response_msg, google::protobuf::RpcController* cntl, int *params);
 //for benchmark
 void async_request(google::protobuf::RpcChannel *rpc_channel, string pbrpc_type, string service_name,
-	const google::protobuf::MethodDescriptor *method, int is_output, string filestr);
-void async_callback(google::protobuf::Message* response_msg, google::protobuf::RpcController* cntl, int is_output, long para_starttime);
+	const google::protobuf::MethodDescriptor *method, int is_output, string filestr, string current_expjson);
+void async_callback(google::protobuf::Message* response_msg, google::protobuf::RpcController* cntl, int is_output, long para_starttime, google::protobuf::Message* exp_msg);
 //socket客户端初始化
 vector<google::protobuf::RpcChannel *> channelinit(string pbrpc_type, string ip_port, int work_thread_num, int client_num, string service_name);
 
@@ -155,8 +168,8 @@ long getCurrentTimeInMSec();//获取当前时间函数，返回单位ms
 long getCurrentTimeInUSec();//获取当前时间函数，返回单位us
 string timestr(long time);//时间戳转化为 "%Y-%m-%d %H:%M:%S" 格式的时间, 输入单位为s
 void microseconds_sleep(int usecd);//select实现精准延时，精确到us级
-std::string exec_cmd(const char* cmd);
-void helpinfo();
+std::string exec_cmd(const char* cmd);//执行shell命令
+void helpinfo();//打印帮助信息
 //for benchmark
 void benchmarkhelpinfo();
 //testreport

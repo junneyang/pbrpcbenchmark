@@ -18,7 +18,9 @@ CPPFLAGS=-D_GNU_SOURCE \
   -DVERSION=\"1.0.0.0\"
 INCPATH=-I. \
   -I./proto \
-  -I./src
+  -I./src \
+  -I./com/rapidjson-master/include \
+  -I./com/jsoncpp-src-0.5.0/include
 DEP_INCPATH=-I../../../../../../com/idlcompiler \
   -I../../../../../../com/idlcompiler/include \
   -I../../../../../../com/idlcompiler/output \
@@ -130,17 +132,17 @@ CCP_FLAGS=
 
 
 #COMAKE UUID
-COMAKE_MD5=1e02cfe35c2e3ec1d9d08505dad98e81  COMAKE
+COMAKE_MD5=1f13ccff1e5b9a9a44dec2ee74e32f4b  COMAKE
 
 
 .PHONY:all
 all:comake2_makefile_check pbrpcclient pbrpcbenchmark 
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mall[0m']"
+	@echo "[COMAKE:BUILD][Target:'all']"
 	@echo "make all done"
 
 .PHONY:comake2_makefile_check
 comake2_makefile_check:
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mcomake2_makefile_check[0m']"
+	@echo "[COMAKE:BUILD][Target:'comake2_makefile_check']"
 	#in case of error, update 'Makefile' by 'comake2'
 	@echo "$(COMAKE_MD5)">comake2.md5
 	@md5sum -c --status comake2.md5
@@ -148,70 +150,86 @@ comake2_makefile_check:
 
 .PHONY:ccpclean
 ccpclean:
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mccpclean[0m']"
+	@echo "[COMAKE:BUILD][Target:'ccpclean']"
 	@echo "make ccpclean done"
 
 .PHONY:clean
 clean:ccpclean
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mclean[0m']"
+	@echo "[COMAKE:BUILD][Target:'clean']"
 	rm -rf pbrpcclient
 	rm -rf pbrpcbenchmark
 	rm -rf src/pbrpcclient_pbrpcclient.o
 	rm -rf src/pbrpcclient_common.o
 	rm -rf proto/pbrpcclient_common.pb.o
+	rm -rf proto/pbrpcclient_echo.pb.o
 	rm -rf proto/pbrpcclient_helloworld.pb.o
 	rm -rf proto/pbrpcclient_ipc.pb.o
 	rm -rf proto/pbrpcclient_pbrpc.pb.o
 	rm -rf proto/pbrpcclient_pbrpc_service.pb.o
 	rm -rf proto/pbrpcclient_regist_condition.pb.o
 	rm -rf proto/pbrpcclient_transport.pb.o
+	rm -rf com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_reader.o
+	rm -rf com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_value.o
+	rm -rf com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_writer.o
 	rm -rf src/pbrpcbenchmark_pbrpcbenchmark.o
 	rm -rf src/pbrpcbenchmark_common.o
 	rm -rf src/pbrpcbenchmark_requestthreadpool.o
 	rm -rf proto/pbrpcbenchmark_common.pb.o
+	rm -rf proto/pbrpcbenchmark_echo.pb.o
 	rm -rf proto/pbrpcbenchmark_helloworld.pb.o
 	rm -rf proto/pbrpcbenchmark_ipc.pb.o
 	rm -rf proto/pbrpcbenchmark_pbrpc.pb.o
 	rm -rf proto/pbrpcbenchmark_pbrpc_service.pb.o
 	rm -rf proto/pbrpcbenchmark_regist_condition.pb.o
 	rm -rf proto/pbrpcbenchmark_transport.pb.o
+	rm -rf com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_reader.o
+	rm -rf com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_value.o
+	rm -rf com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_writer.o
 
 .PHONY:dist
 dist:
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mdist[0m']"
+	@echo "[COMAKE:BUILD][Target:'dist']"
 	tar czvf output.tar.gz output
 	@echo "make dist done"
 
 .PHONY:distclean
 distclean:clean
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mdistclean[0m']"
+	@echo "[COMAKE:BUILD][Target:'distclean']"
 	rm -f output.tar.gz
 	@echo "make distclean done"
 
 .PHONY:love
 love:
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mlove[0m']"
+	@echo "[COMAKE:BUILD][Target:'love']"
 	@echo "make love done"
 
 pbrpcclient:src/pbrpcclient_pbrpcclient.o \
   src/pbrpcclient_common.o \
   proto/pbrpcclient_common.pb.o \
+  proto/pbrpcclient_echo.pb.o \
   proto/pbrpcclient_helloworld.pb.o \
   proto/pbrpcclient_ipc.pb.o \
   proto/pbrpcclient_pbrpc.pb.o \
   proto/pbrpcclient_pbrpc_service.pb.o \
   proto/pbrpcclient_regist_condition.pb.o \
-  proto/pbrpcclient_transport.pb.o
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mpbrpcclient[0m']"
+  proto/pbrpcclient_transport.pb.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_reader.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_value.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_writer.o
+	@echo "[COMAKE:BUILD][Target:'pbrpcclient']"
 	$(CXX) src/pbrpcclient_pbrpcclient.o \
   src/pbrpcclient_common.o \
   proto/pbrpcclient_common.pb.o \
+  proto/pbrpcclient_echo.pb.o \
   proto/pbrpcclient_helloworld.pb.o \
   proto/pbrpcclient_ipc.pb.o \
   proto/pbrpcclient_pbrpc.pb.o \
   proto/pbrpcclient_pbrpc_service.pb.o \
   proto/pbrpcclient_regist_condition.pb.o \
-  proto/pbrpcclient_transport.pb.o -Xlinker "-("  ../../../../../../com/idlcompiler/astyle/libastyle.a \
+  proto/pbrpcclient_transport.pb.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_reader.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_value.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_writer.o -Xlinker "-("  ../../../../../../com/idlcompiler/astyle/libastyle.a \
   ../../../../../../com/idlcompiler/cxx/libskeleton.a \
   ../../../../../../com/idlcompiler/java/libjava_skeleton.a \
   ../../../../../../com/idlcompiler/parser/libparser.a \
@@ -282,23 +300,31 @@ pbrpcbenchmark:src/pbrpcbenchmark_pbrpcbenchmark.o \
   src/pbrpcbenchmark_common.o \
   src/pbrpcbenchmark_requestthreadpool.o \
   proto/pbrpcbenchmark_common.pb.o \
+  proto/pbrpcbenchmark_echo.pb.o \
   proto/pbrpcbenchmark_helloworld.pb.o \
   proto/pbrpcbenchmark_ipc.pb.o \
   proto/pbrpcbenchmark_pbrpc.pb.o \
   proto/pbrpcbenchmark_pbrpc_service.pb.o \
   proto/pbrpcbenchmark_regist_condition.pb.o \
-  proto/pbrpcbenchmark_transport.pb.o
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mpbrpcbenchmark[0m']"
+  proto/pbrpcbenchmark_transport.pb.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_reader.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_value.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_writer.o
+	@echo "[COMAKE:BUILD][Target:'pbrpcbenchmark']"
 	$(CXX) src/pbrpcbenchmark_pbrpcbenchmark.o \
   src/pbrpcbenchmark_common.o \
   src/pbrpcbenchmark_requestthreadpool.o \
   proto/pbrpcbenchmark_common.pb.o \
+  proto/pbrpcbenchmark_echo.pb.o \
   proto/pbrpcbenchmark_helloworld.pb.o \
   proto/pbrpcbenchmark_ipc.pb.o \
   proto/pbrpcbenchmark_pbrpc.pb.o \
   proto/pbrpcbenchmark_pbrpc_service.pb.o \
   proto/pbrpcbenchmark_regist_condition.pb.o \
-  proto/pbrpcbenchmark_transport.pb.o -Xlinker "-("  ../../../../../../com/idlcompiler/astyle/libastyle.a \
+  proto/pbrpcbenchmark_transport.pb.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_reader.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_value.o \
+  com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_writer.o -Xlinker "-("  ../../../../../../com/idlcompiler/astyle/libastyle.a \
   ../../../../../../com/idlcompiler/cxx/libskeleton.a \
   ../../../../../../com/idlcompiler/java/libjava_skeleton.a \
   ../../../../../../com/idlcompiler/parser/libparser.a \
@@ -367,152 +393,343 @@ pbrpcbenchmark:src/pbrpcbenchmark_pbrpcbenchmark.o \
 
 src/pbrpcclient_pbrpcclient.o:src/pbrpcclient.cpp \
   src/common.h \
+  com/rapidjson-master/include/rapidjson/document.h \
+  com/rapidjson-master/include/rapidjson/reader.h \
+  com/rapidjson-master/include/rapidjson/rapidjson.h \
+  com/rapidjson-master/include/rapidjson/allocators.h \
+  com/rapidjson-master/include/rapidjson/encodings.h \
+  com/rapidjson-master/include/rapidjson/internal/meta.h \
+  com/rapidjson-master/include/rapidjson/internal/pow10.h \
+  com/rapidjson-master/include/rapidjson/internal/stack.h \
+  com/rapidjson-master/include/rapidjson/error/error.h \
+  com/rapidjson-master/include/rapidjson/internal/strfunc.h \
+  com/rapidjson-master/include/rapidjson/writer.h \
+  com/rapidjson-master/include/rapidjson/internal/dtoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
   proto/user_proto.h \
   proto/common.pb.h \
+  proto/echo.pb.h \
   proto/helloworld.pb.h \
   proto/ipc.pb.h \
   proto/pbrpc.pb.h \
   proto/pbrpc_service.pb.h \
+  proto/regist_condition.pb.h \
   proto/transport.pb.h \
-  proto/regist_condition.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/pbrpcclient_pbrpcclient.o[0m']"
+  com/jsoncpp-src-0.5.0/include/json/json.h \
+  com/jsoncpp-src-0.5.0/include/json/autolink.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/reader.h \
+  com/jsoncpp-src-0.5.0/include/json/features.h \
+  com/jsoncpp-src-0.5.0/include/json/writer.h
+	@echo "[COMAKE:BUILD][Target:'src/pbrpcclient_pbrpcclient.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/pbrpcclient_pbrpcclient.o src/pbrpcclient.cpp
 
 src/pbrpcclient_common.o:src/common.cpp \
   src/common.h \
+  com/rapidjson-master/include/rapidjson/document.h \
+  com/rapidjson-master/include/rapidjson/reader.h \
+  com/rapidjson-master/include/rapidjson/rapidjson.h \
+  com/rapidjson-master/include/rapidjson/allocators.h \
+  com/rapidjson-master/include/rapidjson/encodings.h \
+  com/rapidjson-master/include/rapidjson/internal/meta.h \
+  com/rapidjson-master/include/rapidjson/internal/pow10.h \
+  com/rapidjson-master/include/rapidjson/internal/stack.h \
+  com/rapidjson-master/include/rapidjson/error/error.h \
+  com/rapidjson-master/include/rapidjson/internal/strfunc.h \
+  com/rapidjson-master/include/rapidjson/writer.h \
+  com/rapidjson-master/include/rapidjson/internal/dtoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
   proto/user_proto.h \
   proto/common.pb.h \
+  proto/echo.pb.h \
   proto/helloworld.pb.h \
   proto/ipc.pb.h \
   proto/pbrpc.pb.h \
   proto/pbrpc_service.pb.h \
+  proto/regist_condition.pb.h \
   proto/transport.pb.h \
-  proto/regist_condition.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/pbrpcclient_common.o[0m']"
+  com/jsoncpp-src-0.5.0/include/json/json.h \
+  com/jsoncpp-src-0.5.0/include/json/autolink.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/reader.h \
+  com/jsoncpp-src-0.5.0/include/json/features.h \
+  com/jsoncpp-src-0.5.0/include/json/writer.h
+	@echo "[COMAKE:BUILD][Target:'src/pbrpcclient_common.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/pbrpcclient_common.o src/common.cpp
 
 proto/pbrpcclient_common.pb.o:proto/common.pb.cc \
   proto/common.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcclient_common.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcclient_common.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcclient_common.pb.o proto/common.pb.cc
+
+proto/pbrpcclient_echo.pb.o:proto/echo.pb.cc \
+  proto/echo.pb.h
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcclient_echo.pb.o']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcclient_echo.pb.o proto/echo.pb.cc
 
 proto/pbrpcclient_helloworld.pb.o:proto/helloworld.pb.cc \
   proto/helloworld.pb.h \
   proto/common.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcclient_helloworld.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcclient_helloworld.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcclient_helloworld.pb.o proto/helloworld.pb.cc
 
 proto/pbrpcclient_ipc.pb.o:proto/ipc.pb.cc \
   proto/ipc.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcclient_ipc.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcclient_ipc.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcclient_ipc.pb.o proto/ipc.pb.cc
 
 proto/pbrpcclient_pbrpc.pb.o:proto/pbrpc.pb.cc \
   proto/pbrpc.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcclient_pbrpc.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcclient_pbrpc.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcclient_pbrpc.pb.o proto/pbrpc.pb.cc
 
 proto/pbrpcclient_pbrpc_service.pb.o:proto/pbrpc_service.pb.cc \
   proto/pbrpc_service.pb.h \
   proto/pbrpc.pb.h \
-  proto/transport.pb.h \
   proto/regist_condition.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcclient_pbrpc_service.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcclient_pbrpc_service.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcclient_pbrpc_service.pb.o proto/pbrpc_service.pb.cc
 
 proto/pbrpcclient_regist_condition.pb.o:proto/regist_condition.pb.cc \
   proto/regist_condition.pb.h \
   proto/pbrpc.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcclient_regist_condition.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcclient_regist_condition.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcclient_regist_condition.pb.o proto/regist_condition.pb.cc
 
 proto/pbrpcclient_transport.pb.o:proto/transport.pb.cc \
   proto/transport.pb.h \
   proto/pbrpc.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcclient_transport.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcclient_transport.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcclient_transport.pb.o proto/transport.pb.cc
+
+com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_reader.o:com/jsoncpp-src-0.5.0/src/lib_json/json_reader.cpp \
+  com/jsoncpp-src-0.5.0/include/json/reader.h \
+  com/jsoncpp-src-0.5.0/include/json/features.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h
+	@echo "[COMAKE:BUILD][Target:'com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_reader.o']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_reader.o com/jsoncpp-src-0.5.0/src/lib_json/json_reader.cpp
+
+com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_value.o:com/jsoncpp-src-0.5.0/src/lib_json/json_value.cpp \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/writer.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/src/lib_json/json_batchallocator.h \
+  com/jsoncpp-src-0.5.0/src/lib_json/json_valueiterator.inl
+	@echo "[COMAKE:BUILD][Target:'com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_value.o']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_value.o com/jsoncpp-src-0.5.0/src/lib_json/json_value.cpp
+
+com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_writer.o:com/jsoncpp-src-0.5.0/src/lib_json/json_writer.cpp \
+  com/jsoncpp-src-0.5.0/include/json/writer.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h
+	@echo "[COMAKE:BUILD][Target:'com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_writer.o']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o com/jsoncpp-src-0.5.0/src/lib_json/pbrpcclient_json_writer.o com/jsoncpp-src-0.5.0/src/lib_json/json_writer.cpp
 
 src/pbrpcbenchmark_pbrpcbenchmark.o:src/pbrpcbenchmark.cpp \
   src/common.h \
+  com/rapidjson-master/include/rapidjson/document.h \
+  com/rapidjson-master/include/rapidjson/reader.h \
+  com/rapidjson-master/include/rapidjson/rapidjson.h \
+  com/rapidjson-master/include/rapidjson/allocators.h \
+  com/rapidjson-master/include/rapidjson/encodings.h \
+  com/rapidjson-master/include/rapidjson/internal/meta.h \
+  com/rapidjson-master/include/rapidjson/internal/pow10.h \
+  com/rapidjson-master/include/rapidjson/internal/stack.h \
+  com/rapidjson-master/include/rapidjson/error/error.h \
+  com/rapidjson-master/include/rapidjson/internal/strfunc.h \
+  com/rapidjson-master/include/rapidjson/writer.h \
+  com/rapidjson-master/include/rapidjson/internal/dtoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
   proto/user_proto.h \
   proto/common.pb.h \
+  proto/echo.pb.h \
   proto/helloworld.pb.h \
   proto/ipc.pb.h \
   proto/pbrpc.pb.h \
   proto/pbrpc_service.pb.h \
-  proto/transport.pb.h \
   proto/regist_condition.pb.h \
+  proto/transport.pb.h \
+  com/jsoncpp-src-0.5.0/include/json/json.h \
+  com/jsoncpp-src-0.5.0/include/json/autolink.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/reader.h \
+  com/jsoncpp-src-0.5.0/include/json/features.h \
+  com/jsoncpp-src-0.5.0/include/json/writer.h \
   src/requestthreadpool.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/pbrpcbenchmark_pbrpcbenchmark.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'src/pbrpcbenchmark_pbrpcbenchmark.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/pbrpcbenchmark_pbrpcbenchmark.o src/pbrpcbenchmark.cpp
 
 src/pbrpcbenchmark_common.o:src/common.cpp \
   src/common.h \
+  com/rapidjson-master/include/rapidjson/document.h \
+  com/rapidjson-master/include/rapidjson/reader.h \
+  com/rapidjson-master/include/rapidjson/rapidjson.h \
+  com/rapidjson-master/include/rapidjson/allocators.h \
+  com/rapidjson-master/include/rapidjson/encodings.h \
+  com/rapidjson-master/include/rapidjson/internal/meta.h \
+  com/rapidjson-master/include/rapidjson/internal/pow10.h \
+  com/rapidjson-master/include/rapidjson/internal/stack.h \
+  com/rapidjson-master/include/rapidjson/error/error.h \
+  com/rapidjson-master/include/rapidjson/internal/strfunc.h \
+  com/rapidjson-master/include/rapidjson/writer.h \
+  com/rapidjson-master/include/rapidjson/internal/dtoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
   proto/user_proto.h \
   proto/common.pb.h \
+  proto/echo.pb.h \
   proto/helloworld.pb.h \
   proto/ipc.pb.h \
   proto/pbrpc.pb.h \
   proto/pbrpc_service.pb.h \
+  proto/regist_condition.pb.h \
   proto/transport.pb.h \
-  proto/regist_condition.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/pbrpcbenchmark_common.o[0m']"
+  com/jsoncpp-src-0.5.0/include/json/json.h \
+  com/jsoncpp-src-0.5.0/include/json/autolink.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/reader.h \
+  com/jsoncpp-src-0.5.0/include/json/features.h \
+  com/jsoncpp-src-0.5.0/include/json/writer.h
+	@echo "[COMAKE:BUILD][Target:'src/pbrpcbenchmark_common.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/pbrpcbenchmark_common.o src/common.cpp
 
 src/pbrpcbenchmark_requestthreadpool.o:src/requestthreadpool.cpp \
   src/requestthreadpool.h \
   src/common.h \
+  com/rapidjson-master/include/rapidjson/document.h \
+  com/rapidjson-master/include/rapidjson/reader.h \
+  com/rapidjson-master/include/rapidjson/rapidjson.h \
+  com/rapidjson-master/include/rapidjson/allocators.h \
+  com/rapidjson-master/include/rapidjson/encodings.h \
+  com/rapidjson-master/include/rapidjson/internal/meta.h \
+  com/rapidjson-master/include/rapidjson/internal/pow10.h \
+  com/rapidjson-master/include/rapidjson/internal/stack.h \
+  com/rapidjson-master/include/rapidjson/error/error.h \
+  com/rapidjson-master/include/rapidjson/internal/strfunc.h \
+  com/rapidjson-master/include/rapidjson/writer.h \
+  com/rapidjson-master/include/rapidjson/internal/dtoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/internal/itoa.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
+  com/rapidjson-master/include/rapidjson/stringbuffer.h \
   proto/user_proto.h \
   proto/common.pb.h \
+  proto/echo.pb.h \
   proto/helloworld.pb.h \
   proto/ipc.pb.h \
   proto/pbrpc.pb.h \
   proto/pbrpc_service.pb.h \
+  proto/regist_condition.pb.h \
   proto/transport.pb.h \
-  proto/regist_condition.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40msrc/pbrpcbenchmark_requestthreadpool.o[0m']"
+  com/jsoncpp-src-0.5.0/include/json/json.h \
+  com/jsoncpp-src-0.5.0/include/json/autolink.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/reader.h \
+  com/jsoncpp-src-0.5.0/include/json/features.h \
+  com/jsoncpp-src-0.5.0/include/json/writer.h
+	@echo "[COMAKE:BUILD][Target:'src/pbrpcbenchmark_requestthreadpool.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o src/pbrpcbenchmark_requestthreadpool.o src/requestthreadpool.cpp
 
 proto/pbrpcbenchmark_common.pb.o:proto/common.pb.cc \
   proto/common.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcbenchmark_common.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcbenchmark_common.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcbenchmark_common.pb.o proto/common.pb.cc
+
+proto/pbrpcbenchmark_echo.pb.o:proto/echo.pb.cc \
+  proto/echo.pb.h
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcbenchmark_echo.pb.o']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcbenchmark_echo.pb.o proto/echo.pb.cc
 
 proto/pbrpcbenchmark_helloworld.pb.o:proto/helloworld.pb.cc \
   proto/helloworld.pb.h \
   proto/common.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcbenchmark_helloworld.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcbenchmark_helloworld.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcbenchmark_helloworld.pb.o proto/helloworld.pb.cc
 
 proto/pbrpcbenchmark_ipc.pb.o:proto/ipc.pb.cc \
   proto/ipc.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcbenchmark_ipc.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcbenchmark_ipc.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcbenchmark_ipc.pb.o proto/ipc.pb.cc
 
 proto/pbrpcbenchmark_pbrpc.pb.o:proto/pbrpc.pb.cc \
   proto/pbrpc.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcbenchmark_pbrpc.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcbenchmark_pbrpc.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcbenchmark_pbrpc.pb.o proto/pbrpc.pb.cc
 
 proto/pbrpcbenchmark_pbrpc_service.pb.o:proto/pbrpc_service.pb.cc \
   proto/pbrpc_service.pb.h \
   proto/pbrpc.pb.h \
-  proto/transport.pb.h \
   proto/regist_condition.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcbenchmark_pbrpc_service.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcbenchmark_pbrpc_service.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcbenchmark_pbrpc_service.pb.o proto/pbrpc_service.pb.cc
 
 proto/pbrpcbenchmark_regist_condition.pb.o:proto/regist_condition.pb.cc \
   proto/regist_condition.pb.h \
   proto/pbrpc.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcbenchmark_regist_condition.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcbenchmark_regist_condition.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcbenchmark_regist_condition.pb.o proto/regist_condition.pb.cc
 
 proto/pbrpcbenchmark_transport.pb.o:proto/transport.pb.cc \
   proto/transport.pb.h \
   proto/pbrpc.pb.h
-	@echo "[[1;32;40mCOMAKE:BUILD[0m][Target:'[1;32;40mproto/pbrpcbenchmark_transport.pb.o[0m']"
+	@echo "[COMAKE:BUILD][Target:'proto/pbrpcbenchmark_transport.pb.o']"
 	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o proto/pbrpcbenchmark_transport.pb.o proto/transport.pb.cc
+
+com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_reader.o:com/jsoncpp-src-0.5.0/src/lib_json/json_reader.cpp \
+  com/jsoncpp-src-0.5.0/include/json/reader.h \
+  com/jsoncpp-src-0.5.0/include/json/features.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h
+	@echo "[COMAKE:BUILD][Target:'com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_reader.o']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_reader.o com/jsoncpp-src-0.5.0/src/lib_json/json_reader.cpp
+
+com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_value.o:com/jsoncpp-src-0.5.0/src/lib_json/json_value.cpp \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h \
+  com/jsoncpp-src-0.5.0/include/json/writer.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/src/lib_json/json_batchallocator.h \
+  com/jsoncpp-src-0.5.0/src/lib_json/json_valueiterator.inl
+	@echo "[COMAKE:BUILD][Target:'com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_value.o']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_value.o com/jsoncpp-src-0.5.0/src/lib_json/json_value.cpp
+
+com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_writer.o:com/jsoncpp-src-0.5.0/src/lib_json/json_writer.cpp \
+  com/jsoncpp-src-0.5.0/include/json/writer.h \
+  com/jsoncpp-src-0.5.0/include/json/value.h \
+  com/jsoncpp-src-0.5.0/include/json/forwards.h \
+  com/jsoncpp-src-0.5.0/include/json/config.h
+	@echo "[COMAKE:BUILD][Target:'com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_writer.o']"
+	$(CXX) -c $(INCPATH) $(DEP_INCPATH) $(CPPFLAGS) $(CXXFLAGS)  -o com/jsoncpp-src-0.5.0/src/lib_json/pbrpcbenchmark_json_writer.o com/jsoncpp-src-0.5.0/src/lib_json/json_writer.cpp
 
 endif #ifeq ($(shell uname -m),x86_64)
 

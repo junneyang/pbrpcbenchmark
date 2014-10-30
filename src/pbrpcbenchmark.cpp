@@ -34,7 +34,7 @@ using namespace std;
 int main(int argc, char **argv) {
 	//params args = (params)malloc(sizeof(struct _params));
 	params args = new _params;
-	if (argc != 12) {
+	if (argc != 13) {
 		benchmarkhelpinfo();
 		return -1;
 	} else {
@@ -46,9 +46,10 @@ int main(int argc, char **argv) {
 		args->send_threadnum = atoi(argv[6]);
 		args->client_num = atoi(argv[7]);
 		args->send_rate = atoi(argv[8]);
-		args->test_time = atof(argv[9]);
-		args->is_output = atoi(argv[10]);
-		string filepath = string(argv[11]);
+		args->is_random = atoi(argv[9]);
+		args->test_time = atof(argv[10]);
+		args->is_output = atoi(argv[11]);
+		string filepath = string(argv[12]);
 		args->testdata = getfilestr(filepath);
 	}
 	if (args->work_thread_num <= 0 || args->work_thread_num%2 != 0) {

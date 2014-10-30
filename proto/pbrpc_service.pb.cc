@@ -21,7 +21,6 @@ namespace {
 
 const ::google::protobuf::ServiceDescriptor* UserService_descriptor_ = NULL;
 const ::google::protobuf::ServiceDescriptor* ItemService_descriptor_ = NULL;
-const ::google::protobuf::ServiceDescriptor* TransportFileService_descriptor_ = NULL;
 const ::google::protobuf::ServiceDescriptor* DynamicPlanService_descriptor_ = NULL;
 const ::google::protobuf::ServiceDescriptor* LvPlanService_descriptor_ = NULL;
 const ::google::protobuf::ServiceDescriptor* PushService_descriptor_ = NULL;
@@ -37,10 +36,9 @@ void protobuf_AssignDesc_pbrpc_5fservice_2eproto() {
   GOOGLE_CHECK(file != NULL);
   UserService_descriptor_ = file->service(0);
   ItemService_descriptor_ = file->service(1);
-  TransportFileService_descriptor_ = file->service(2);
-  DynamicPlanService_descriptor_ = file->service(3);
-  LvPlanService_descriptor_ = file->service(4);
-  PushService_descriptor_ = file->service(5);
+  DynamicPlanService_descriptor_ = file->service(2);
+  LvPlanService_descriptor_ = file->service(3);
+  PushService_descriptor_ = file->service(4);
 }
 
 namespace {
@@ -67,52 +65,52 @@ void protobuf_AddDesc_pbrpc_5fservice_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::lbs::da::openservice::protobuf_AddDesc_pbrpc_2eproto();
-  ::lbs::da::openservice::protobuf_AddDesc_transport_2eproto();
   ::lbs::da::openservice::protobuf_AddDesc_regist_5fcondition_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\023pbrpc_service.proto\022\022lbs.da.openservic"
-    "e\032\013pbrpc.proto\032\017transport.proto\032\026regist_"
-    "condition.proto2\227\006\n\013UserService\022p\n\021GetUs"
-    "erPreference\022,.lbs.da.openservice.GetUse"
-    "rPreferenceRequest\032-.lbs.da.openservice."
-    "GetUserPreferenceResponse\022z\n\027GetUserRegu"
-    "larStayPoint\022..lbs.da.openservice.GetReg"
-    "ularStayPointRequest\032/.lbs.da.openservic"
-    "e.GetRegularStayPointResponse\022v\n\027GetLate"
-    "stUserTrajStatus\022,.lbs.da.openservice.Ge"
-    "tLatestUserTrajRequest\032-.lbs.da.openserv"
-    "ice.GetLatestUserTrajResponse\022k\n\024GetPlac"
-    "eSemanticInfo\022(.lbs.da.openservice.Place"
-    "SemanticRequest\032).lbs.da.openservice.Pla"
-    "ceSemanticResponse\022y\n\026GetNuomiUserPrefer"
-    "ence\022..lbs.da.openservice.NuomiUserPrefe"
-    "renceRequest\032/.lbs.da.openservice.NuomiU"
-    "serPreferenceResponse\022Y\n\020GetAOIByLocatio"
-    "n\022!.lbs.da.openservice.GetAOIRequest\032\".l"
-    "bs.da.openservice.GetAOIResponse\022_\n\016GetN"
-    "earPoiInfo\022%.lbs.da.openservice.GetNearP"
-    "oiRequest\032&.lbs.da.openservice.GetNearPo"
-    "iResponse2\331\001\n\013ItemService\022g\n\016GetItemsByI"
-    "tem\022).lbs.da.openservice.GetItemsByItemR"
-    "equest\032*.lbs.da.openservice.GetItemsByIt"
-    "emResponse\022a\n\020GetBNItemsByItem\022%.lbs.da."
-    "openservice.GetBNItemsRequest\032&.lbs.da.o"
-    "penservice.GetBNItemsResponse2|\n\024Transpo"
-    "rtFileService\022d\n\rTransportFile\022(.lbs.da."
-    "openservice.TransportFileRequest\032).lbs.d"
-    "a.openservice.TransportFileResponse2\203\001\n\022"
-    "DynamicPlanService\022m\n\022GetDynamicTripPlan"
-    "\022*.lbs.da.openservice.DynamicTripPlanReq"
-    "uest\032+.lbs.da.openservice.DynamicTripPla"
-    "nResponse2o\n\rLvPlanService\022^\n\rGetLvTripP"
-    "lan\022%.lbs.da.openservice.LvTripPlanReque"
-    "st\032&.lbs.da.openservice.LvTripPlanRespon"
-    "se2\326\001\n\013PushService\022j\n\017RegistCondition\022*."
-    "lbs.da.openservice.RegistConditionReques"
-    "t\032+.lbs.da.openservice.RegistConditionRe"
-    "sponse\022[\n\nSetTrigger\022%.lbs.da.openservic"
-    "e.SetTriggerRequest\032&.lbs.da.openservice"
-    ".SetTriggerResponseB\003\200\001\001", 1704);
+    "e\032\013pbrpc.proto\032\026regist_condition.proto2\323"
+    "\007\n\013UserService\022p\n\021GetUserPreference\022,.lb"
+    "s.da.openservice.GetUserPreferenceReques"
+    "t\032-.lbs.da.openservice.GetUserPreference"
+    "Response\022z\n\027GetUserRegularStayPoint\022..lb"
+    "s.da.openservice.GetRegularStayPointRequ"
+    "est\032/.lbs.da.openservice.GetRegularStayP"
+    "ointResponse\022v\n\027GetLatestUserTrajStatus\022"
+    ",.lbs.da.openservice.GetLatestUserTrajRe"
+    "quest\032-.lbs.da.openservice.GetLatestUser"
+    "TrajResponse\022k\n\024GetPlaceSemanticInfo\022(.l"
+    "bs.da.openservice.PlaceSemanticRequest\032)"
+    ".lbs.da.openservice.PlaceSemanticRespons"
+    "e\022y\n\026GetNuomiUserPreference\022..lbs.da.ope"
+    "nservice.NuomiUserPreferenceRequest\032/.lb"
+    "s.da.openservice.NuomiUserPreferenceResp"
+    "onse\022Y\n\020GetAOIByLocation\022!.lbs.da.opense"
+    "rvice.GetAOIRequest\032\".lbs.da.openservice"
+    ".GetAOIResponse\022_\n\016GetNearPoiInfo\022%.lbs."
+    "da.openservice.GetNearPoiRequest\032&.lbs.d"
+    "a.openservice.GetNearPoiResponse\022c\n\016GetB"
+    "uy2BuyInfo\022\'.lbs.da.openservice.NuomiBuy"
+    "2BuyRequest\032(.lbs.da.openservice.NuomiBu"
+    "y2BuyResponse\022U\n\010POIMatch\022#.lbs.da.opens"
+    "ervice.POIMatchRequest\032$.lbs.da.openserv"
+    "ice.POIMatchResponse2\331\001\n\013ItemService\022g\n\016"
+    "GetItemsByItem\022).lbs.da.openservice.GetI"
+    "temsByItemRequest\032*.lbs.da.openservice.G"
+    "etItemsByItemResponse\022a\n\020GetBNItemsByIte"
+    "m\022%.lbs.da.openservice.GetBNItemsRequest"
+    "\032&.lbs.da.openservice.GetBNItemsResponse"
+    "2\203\001\n\022DynamicPlanService\022m\n\022GetDynamicTri"
+    "pPlan\022*.lbs.da.openservice.DynamicTripPl"
+    "anRequest\032+.lbs.da.openservice.DynamicTr"
+    "ipPlanResponse2o\n\rLvPlanService\022^\n\rGetLv"
+    "TripPlan\022%.lbs.da.openservice.LvTripPlan"
+    "Request\032&.lbs.da.openservice.LvTripPlanR"
+    "esponse2\326\001\n\013PushService\022j\n\017RegistConditi"
+    "on\022*.lbs.da.openservice.RegistConditionR"
+    "equest\032+.lbs.da.openservice.RegistCondit"
+    "ionResponse\022[\n\nSetTrigger\022%.lbs.da.opens"
+    "ervice.SetTriggerRequest\032&.lbs.da.opense"
+    "rvice.SetTriggerResponseB\003\200\001\001", 1749);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "pbrpc_service.proto", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_pbrpc_5fservice_2eproto);
@@ -196,6 +194,22 @@ void UserService::GetNearPoiInfo(::google::protobuf::RpcController* controller,
   done->Run();
 }
 
+void UserService::GetBuy2BuyInfo(::google::protobuf::RpcController* controller,
+                         const ::lbs::da::openservice::NuomiBuy2BuyRequest*,
+                         ::lbs::da::openservice::NuomiBuy2BuyResponse*,
+                         ::google::protobuf::Closure* done) {
+  controller->SetFailed("Method GetBuy2BuyInfo() not implemented.");
+  done->Run();
+}
+
+void UserService::POIMatch(::google::protobuf::RpcController* controller,
+                         const ::lbs::da::openservice::POIMatchRequest*,
+                         ::lbs::da::openservice::POIMatchResponse*,
+                         ::google::protobuf::Closure* done) {
+  controller->SetFailed("Method POIMatch() not implemented.");
+  done->Run();
+}
+
 void UserService::CallMethod(const ::google::protobuf::MethodDescriptor* method,
                              ::google::protobuf::RpcController* controller,
                              const ::google::protobuf::Message* request,
@@ -245,6 +259,18 @@ void UserService::CallMethod(const ::google::protobuf::MethodDescriptor* method,
              ::google::protobuf::down_cast< ::lbs::da::openservice::GetNearPoiResponse*>(response),
              done);
       break;
+    case 7:
+      GetBuy2BuyInfo(controller,
+             ::google::protobuf::down_cast<const ::lbs::da::openservice::NuomiBuy2BuyRequest*>(request),
+             ::google::protobuf::down_cast< ::lbs::da::openservice::NuomiBuy2BuyResponse*>(response),
+             done);
+      break;
+    case 8:
+      POIMatch(controller,
+             ::google::protobuf::down_cast<const ::lbs::da::openservice::POIMatchRequest*>(request),
+             ::google::protobuf::down_cast< ::lbs::da::openservice::POIMatchResponse*>(response),
+             done);
+      break;
     default:
       GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
       break;
@@ -269,6 +295,10 @@ const ::google::protobuf::Message& UserService::GetRequestPrototype(
       return ::lbs::da::openservice::GetAOIRequest::default_instance();
     case 6:
       return ::lbs::da::openservice::GetNearPoiRequest::default_instance();
+    case 7:
+      return ::lbs::da::openservice::NuomiBuy2BuyRequest::default_instance();
+    case 8:
+      return ::lbs::da::openservice::POIMatchRequest::default_instance();
     default:
       GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
       return *reinterpret_cast< ::google::protobuf::Message*>(NULL);
@@ -293,6 +323,10 @@ const ::google::protobuf::Message& UserService::GetResponsePrototype(
       return ::lbs::da::openservice::GetAOIResponse::default_instance();
     case 6:
       return ::lbs::da::openservice::GetNearPoiResponse::default_instance();
+    case 7:
+      return ::lbs::da::openservice::NuomiBuy2BuyResponse::default_instance();
+    case 8:
+      return ::lbs::da::openservice::POIMatchResponse::default_instance();
     default:
       GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
       return *reinterpret_cast< ::google::protobuf::Message*>(NULL);
@@ -357,6 +391,20 @@ void UserService_Stub::GetNearPoiInfo(::google::protobuf::RpcController* control
                               ::lbs::da::openservice::GetNearPoiResponse* response,
                               ::google::protobuf::Closure* done) {
   channel_->CallMethod(descriptor()->method(6),
+                       controller, request, response, done);
+}
+void UserService_Stub::GetBuy2BuyInfo(::google::protobuf::RpcController* controller,
+                              const ::lbs::da::openservice::NuomiBuy2BuyRequest* request,
+                              ::lbs::da::openservice::NuomiBuy2BuyResponse* response,
+                              ::google::protobuf::Closure* done) {
+  channel_->CallMethod(descriptor()->method(7),
+                       controller, request, response, done);
+}
+void UserService_Stub::POIMatch(::google::protobuf::RpcController* controller,
+                              const ::lbs::da::openservice::POIMatchRequest* request,
+                              ::lbs::da::openservice::POIMatchResponse* response,
+                              ::google::protobuf::Closure* done) {
+  channel_->CallMethod(descriptor()->method(8),
                        controller, request, response, done);
 }
 // ===================================================================
@@ -465,89 +513,6 @@ void ItemService_Stub::GetBNItemsByItem(::google::protobuf::RpcController* contr
                               ::lbs::da::openservice::GetBNItemsResponse* response,
                               ::google::protobuf::Closure* done) {
   channel_->CallMethod(descriptor()->method(1),
-                       controller, request, response, done);
-}
-// ===================================================================
-
-TransportFileService::~TransportFileService() {}
-
-const ::google::protobuf::ServiceDescriptor* TransportFileService::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TransportFileService_descriptor_;
-}
-
-const ::google::protobuf::ServiceDescriptor* TransportFileService::GetDescriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TransportFileService_descriptor_;
-}
-
-void TransportFileService::TransportFile(::google::protobuf::RpcController* controller,
-                         const ::lbs::da::openservice::TransportFileRequest*,
-                         ::lbs::da::openservice::TransportFileResponse*,
-                         ::google::protobuf::Closure* done) {
-  controller->SetFailed("Method TransportFile() not implemented.");
-  done->Run();
-}
-
-void TransportFileService::CallMethod(const ::google::protobuf::MethodDescriptor* method,
-                             ::google::protobuf::RpcController* controller,
-                             const ::google::protobuf::Message* request,
-                             ::google::protobuf::Message* response,
-                             ::google::protobuf::Closure* done) {
-  GOOGLE_DCHECK_EQ(method->service(), TransportFileService_descriptor_);
-  switch(method->index()) {
-    case 0:
-      TransportFile(controller,
-             ::google::protobuf::down_cast<const ::lbs::da::openservice::TransportFileRequest*>(request),
-             ::google::protobuf::down_cast< ::lbs::da::openservice::TransportFileResponse*>(response),
-             done);
-      break;
-    default:
-      GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
-      break;
-  }
-}
-
-const ::google::protobuf::Message& TransportFileService::GetRequestPrototype(
-    const ::google::protobuf::MethodDescriptor* method) const {
-  GOOGLE_DCHECK_EQ(method->service(), descriptor());
-  switch(method->index()) {
-    case 0:
-      return ::lbs::da::openservice::TransportFileRequest::default_instance();
-    default:
-      GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
-      return *reinterpret_cast< ::google::protobuf::Message*>(NULL);
-  }
-}
-
-const ::google::protobuf::Message& TransportFileService::GetResponsePrototype(
-    const ::google::protobuf::MethodDescriptor* method) const {
-  GOOGLE_DCHECK_EQ(method->service(), descriptor());
-  switch(method->index()) {
-    case 0:
-      return ::lbs::da::openservice::TransportFileResponse::default_instance();
-    default:
-      GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
-      return *reinterpret_cast< ::google::protobuf::Message*>(NULL);
-  }
-}
-
-TransportFileService_Stub::TransportFileService_Stub(::google::protobuf::RpcChannel* channel)
-  : channel_(channel), owns_channel_(false) {}
-TransportFileService_Stub::TransportFileService_Stub(
-    ::google::protobuf::RpcChannel* channel,
-    ::google::protobuf::Service::ChannelOwnership ownership)
-  : channel_(channel),
-    owns_channel_(ownership == ::google::protobuf::Service::STUB_OWNS_CHANNEL) {}
-TransportFileService_Stub::~TransportFileService_Stub() {
-  if (owns_channel_) delete channel_;
-}
-
-void TransportFileService_Stub::TransportFile(::google::protobuf::RpcController* controller,
-                              const ::lbs::da::openservice::TransportFileRequest* request,
-                              ::lbs::da::openservice::TransportFileResponse* response,
-                              ::google::protobuf::Closure* done) {
-  channel_->CallMethod(descriptor()->method(0),
                        controller, request, response, done);
 }
 // ===================================================================

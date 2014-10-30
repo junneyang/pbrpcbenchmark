@@ -58,5 +58,7 @@ int main()
 	long current = getCurrentTimeInMSec();
 	long tmp_end = getCurrentTimeInUSec();
 	int interval = tmp_end - tmp_start;
-	std::cout << interval;
+	tmp_end = getCurrentTimeInUSec();
+	interval = tmp_end - tmp_start;
+	std::cout << interval << std::endl;
 }

@@ -1,5 +1,4 @@
 import "pbrpc.proto";
-import "transport.proto";
 import "regist_condition.proto";
 
 package lbs.da.openservice;
@@ -14,7 +13,7 @@ service UserService {
     rpc GetUserPreference (GetUserPreferenceRequest) returns
 	(GetUserPreferenceResponse);
 	/*
-       * 返回指定用户（imei）的常驻点信息，若携带type指定类型，则返回结果为指定类型的常驻点，否则返回所有常驻点
+       * 返回指定用户（cuid）的常驻点信息，若携带type指定类型，则返回结果为指定类型的常驻点，否则返回所有常驻点;或者指定坐标，返回匹配的常住地类型
       */
     rpc GetUserRegularStayPoint (GetRegularStayPointRequest) returns
 	(GetRegularStayPointResponse); /*
@@ -34,7 +33,12 @@ service UserService {
     rpc GetAOIByLocation (GetAOIRequest) returns (GetAOIResponse);
  
      //得到附近poi信息
-    rpc GetNearPoiInfo(GetNearPoiRequest) returns (GetNearPoiResponse);       
+    rpc GetNearPoiInfo(GetNearPoiRequest) returns (GetNearPoiResponse);
+
+    // @dengweiru add by 20141021 买了又买用户偏好和商户关联的总接口
+    rpc GetBuy2BuyInfo (NuomiBuy2BuyRequest) returns (NuomiBuy2BuyResponse);
+    
+    rpc POIMatch (POIMatchRequest) returns (POIMatchResponse);
 };
 
 service ItemService {
@@ -45,12 +49,6 @@ service ItemService {
 	(GetItemsByItemResponse);
 
 	rpc GetBNItemsByItem(GetBNItemsRequest) returns (GetBNItemsResponse);
-};
-
-service TransportFileService {
-
-      rpc TransportFile (TransportFileRequest) returns (TransportFileResponse);
-
 };
 
 

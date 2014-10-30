@@ -38,7 +38,7 @@ long below_10=0;
 long between_10_20=0;
 long between_20_30=0;
 long over_30=0;
-long total_res_time=0;
+double total_res_time=0.0;
 
 void callback (google::protobuf::Message* request_msg, google::protobuf::Message* response_msg, google::protobuf::RpcController* cntl, int *params) {
 	string json_string;
@@ -55,16 +55,17 @@ void callback (google::protobuf::Message* request_msg, google::protobuf::Message
 	delete response_msg;
 }
 
-void async_callback(google::protobuf::Message* response_msg, google::protobuf::RpcController* cntl, int is_output, long para_starttime) {
-	long para_endtime = getCurrentTimeInMSec();
-	int cost_time = para_endtime - para_starttime;
+void async_callback(google::protobuf::Message* response_msg, google::protobuf::RpcController* cntl, 
+		int is_output, long para_starttime, google::protobuf::Message* exp_msg) {
+	long para_endtime = getCurrentTimeInUSec();
+	double cost_time = (para_endtime - para_starttime)/1000.0;	//us 2 ms
 	pthread_mutex_lock(&mutex);
 	total_res_time += cost_time;
-	if(cost_time<10){
+	if(cost_time < 10.0){
 		below_10++;
-	}else if(cost_time>=10 && cost_time<20){
+	}else if(cost_time >= 10.0 && cost_time < 20.0){
 		between_10_20++;
-	}else if(cost_time>=20 && cost_time<30){
+	}else if(cost_time >= 20 && cost_time < 30){
 		between_20_30++;
 	}else{
 		over_30++;
@@ -72,13 +73,20 @@ void async_callback(google::protobuf::Message* response_msg, google::protobuf::R
 	pthread_mutex_unlock(&mutex);
 	
 	string json_string;
+	string exp_json_string;
 	string error;
-	if(ProtoMessageToJson(*response_msg, &json_string, &error)) {
-		pthread_mutex_lock(&mutex);
-		total_res += 1;
-		pthread_mutex_unlock(&mutex);
+	if (ProtoMessageToJson(*response_msg, &json_string, &error) && ProtoMessageToJson(*exp_msg, &exp_json_string, &error)) {
 		if (is_output) {
 			cout << json_string << endl;
+		}
+		if (json_string == exp_json_string) {
+			pthread_mutex_lock(&mutex);
+			total_res += 1;
+			pthread_mutex_unlock(&mutex);
+		} else {
+			pthread_mutex_lock(&mutex);
+			total_err += 1;
+			pthread_mutex_unlock(&mutex);
 		}
 	} else {
 		pthread_mutex_lock(&mutex);
@@ -89,14 +97,13 @@ void async_callback(google::protobuf::Message* response_msg, google::protobuf::R
 	
 	delete cntl;
 	delete response_msg;
-	
+	delete exp_msg;
 	//async_request(rpc_channel, pbrpc_type, service_name, method_name, method, filestr);
 }
 
 void async_request(google::protobuf::RpcChannel *rpc_channel, string pbrpc_type, string service_name, 
-	const google::protobuf::MethodDescriptor *method, int is_output, string filestr) {
+	const google::protobuf::MethodDescriptor *method, int is_output, string filestr, string current_expjson) {
 	string error;
-	
 	google::protobuf::Message* request_msg = GetMessageByMethodDescriptor(method, true);
 	if (request_msg == NULL) {
 		return;
@@ -111,6 +118,16 @@ void async_request(google::protobuf::RpcChannel *rpc_channel, string pbrpc_type,
 	//构造返回
 	google::protobuf::Message* response_msg = GetMessageByMethodDescriptor(method, false);
 	if (response_msg == NULL) {
+		return;
+	}
+	//构造期望返回
+	google::protobuf::Message* exp_msg = GetMessageByMethodDescriptor(method, false);
+	if (exp_msg == NULL) {
+		return;
+	}
+	if(JsonToProtoMessage(current_expjson, exp_msg, &error)) {
+	} else {
+		cout << "ERROR : json to proto message error" << error << endl;
 		return;
 	}
 	
@@ -130,8 +147,8 @@ void async_request(google::protobuf::RpcChannel *rpc_channel, string pbrpc_type,
 		cout << "ERROR : not supported pbrpc type\n";
 		return;
 	}
-	long para_starttime = getCurrentTimeInMSec();
-	google::protobuf::Closure* done = google::protobuf::NewCallback(&async_callback, response_msg, cntl, is_output, para_starttime);
+	long para_starttime = getCurrentTimeInUSec();
+	google::protobuf::Closure* done = google::protobuf::NewCallback(&async_callback, response_msg, cntl, is_output, para_starttime, exp_msg);
 	
 	//请求
 	rpc_channel->CallMethod(method, cntl, request_msg, response_msg, done);
@@ -170,6 +187,10 @@ vector<google::protobuf::RpcChannel *> channelinit(string pbrpc_type, string ip_
 		rpc_client->Start();
 		for (int i=0; i<client_num; i++) {
 			baidu::hulu::pbrpc::RpcChannelOptions channel_options;
+			//set tmout with a large number
+			channel_options.connect_timeout_ms = 50000000;
+			channel_options.session_timeout_ms = 50000000;
+			channel_options.once_talk_timeout_ms = 50000000;
 			google::protobuf::RpcChannel *rpc_channel = new baidu::hulu::pbrpc::RpcChannel(ip_port, rpc_client);
 			if (rpc_channel != NULL) {
 				(static_cast<baidu::hulu::pbrpc::RpcChannel*> (rpc_channel))->set_options(channel_options);
@@ -324,10 +345,10 @@ void helpinfo() {
 	cout << "|USAGE          : ./pbrpcclient <PBTYPE> <IPPORT> <ServiceName> <MethodName> <TestData>\n";
 	cout << "|       PBTYPE  : type of pbrpc, currently supported PUBLIC-PBRPC/SOFA-PBRPC/HULU-PBRPC, eg : SOFA-PBRPC \n";
 	cout << "|       IPPORT  : sever ip port pair, eg : 127.0.0.1:7789 \n";
-	cout << "|  ServiceName  : service name, eg : lbs.da.openservice.UserService \n";
-	cout << "|   MethodName  : method name, eg : GetNuomiUserPreference \n";
-	cout << "|     TestData  : test data file path, eg : ./data/nuomi_up.data \n|\n";
-	cout << "|EXAMPLE        : ./pbrpcclient HULU-PBRPC 127.0.0.1:7790 lbs.da.openservice.UserService GetNuomiUserPreference ./data/nuomi_up.data \n";
+	cout << "|  ServiceName  : service name, eg : lbs.da.openservice.ItemService \n";
+	cout << "|   MethodName  : method name, eg : GetItemsByItem \n";
+	cout << "|     TestData  : test data file path, eg : ./data/item_function_json.data \n|\n";
+	cout << "|EXAMPLE        : ./pbrpcclient HULU-PBRPC 127.0.0.1:7790 lbs.da.openservice.ItemService GetItemsByItem ./data/item_function_json.data \n";
 	cout << "|-------------------------------------------------------------------------------------\n";
 	cout << "|MORE           : if any questions, please contact 597092663@qq.com \n";
 	cout << "======================================================================================\n";
@@ -337,19 +358,20 @@ void benchmarkhelpinfo() {
 	cout << "======================================================================================\n";
 	cout << "|                                 Usage Instructions                                 |\n";
 	cout << "======================================================================================\n";
-	cout << "|USAGE          : ./pbrpcbenchmark <PBTYPE> <IPPORT> <ServiceName> <MethodName> <WorkThreadNum> <SendThreadNum> <ClientNum> <SendRate> <TestTime> <IsOutput> <TestData>\n";
+	cout << "|USAGE          : ./pbrpcbenchmark <PBTYPE> <IPPORT> <ServiceName> <MethodName> <WorkThreadNum> <SendThreadNum> <ClientNum> <SendRate> <IsRandom> <TestTime> <IsOutput> <TestData>\n";
 	cout << "|       PBTYPE  : type of pbrpc, currently supported PUBLIC-PBRPC/SOFA-PBRPC/HULU-PBRPC, eg : SOFA-PBRPC \n";
 	cout << "|       IPPORT  : sever ip port pair, eg : 127.0.0.1:7789 \n";
-	cout << "|  ServiceName  : service name, eg : lbs.da.openservice.UserService \n";
+	cout << "|  ServiceName  : service name, eg : lbs.da.openservice.ItemService \n";
 	cout << "|   MethodName  : method name, eg : GetNuomiUserPreference \n";
-	cout << "|WorkThreadNum  : numbers of work thread, less than the number of processors and 2*N is suggested. eg : 2 4 6 8 10 etc. \n";
-	cout << "|SendThreadNum  : numbers of send thread, less than the number of processors is suggested. eg : 2. \n";
+	cout << "|WorkThreadNum  : numbers of work thread, less than the number of processors and 2*N is suggested. eg : 2 4 6 8 10 etc \n";
+	cout << "|SendThreadNum  : numbers of send thread, less than the number of processors is suggested. eg : 2 \n";
 	cout << "|    ClientNum  : numbers of socket connections, eg : 20 \n";
 	cout << "|     SendRate  : rate of request sending per thread per client per minute, -1 represents the maximum ability to send, eg : 200 \n";
+	cout << "|     IsRandom  : flag of whether to send the request with random sequence, 0 represents ordinal, 1 represents random, eg : 1 \n";
 	cout << "|     TestTime  : total test time(min), eg : 1.0 \n";
 	cout << "|     IsOutput  : flag of whether print the response content. eg : 0 \n";
-	cout << "|     TestData  : test data file path, eg : ./data/nuomi_up.data \n|\n";
-	cout << "|EXAMPLE        : ./pbrpcbenchmark HULU-PBRPC 127.0.0.1:7790 lbs.da.openservice.UserService GetNuomiUserPreference 8 2 20 200 1.0 0 ./data/nuomi_up.data \n";
+	cout << "|     TestData  : test data file path, eg : ./data/item_benchmark_json.data \n|\n";
+	cout << "|EXAMPLE        : ./pbrpcbenchmark HULU-PBRPC 127.0.0.1:7790 lbs.da.openservice.ItemService GetItemsByItem 8 2 20 200 1 1.0 0 ./data/item_benchmark_json.data \n";
 	cout << "|-------------------------------------------------------------------------------------\n";
 	cout << "|MORE           : if any questions, please contact 597092663@qq.com \n";
 	cout << "======================================================================================\n";

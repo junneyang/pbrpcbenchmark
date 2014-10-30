@@ -1,0 +1,162 @@
+Running from: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkins.war
+webroot: EnvVars.masterEnvVars.get("JENKINS_HOME")
+Exception in thread "main" java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+	at java.lang.reflect.Method.invoke(Method.java:597)
+	at Main._main(Main.java:293)
+	at Main.main(Main.java:98)
+Caused by: java.lang.IllegalArgumentException: Expecting ----httpPort=VALUE but found no value
+	at winstone.cmdline.CmdLineParser.parse(CmdLineParser.java:61)
+	at winstone.Launcher.getArgsFromCommandLine(Launcher.java:361)
+	at winstone.Launcher.main(Launcher.java:334)
+	... 6 more
+Running from: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkins.war
+webroot: EnvVars.masterEnvVars.get("JENKINS_HOME")
+2014-10-14 17:45:20 winstone.Logger logInternal
+信息: Beginning extraction from war file
+2014-10-14 17:45:22 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: jetty-8.y.z-SNAPSHOT
+2014-10-14 17:45:24 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: NO JSP Support for , did not find org.apache.jasper.servlet.JspServlet
+Jenkins home directory: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkinshome found at: EnvVars.masterEnvVars.get("JENKINS_HOME")
+2014-10-14 17:45:25 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: Started SelectChannelConnector@0.0.0.0:7878
+2014-10-14 17:45:25 winstone.Logger logInternal
+信息: Winstone Servlet Engine v2.0 running: controlPort=disabled
+2014-10-14 17:45:25 jenkins.InitReactorRunner$1 onAttained
+信息: Started initialization
+2014-10-14 17:45:36 jenkins.InitReactorRunner$1 onAttained
+信息: Listed all plugins
+2014-10-14 17:45:37 jenkins.InitReactorRunner$1 onAttained
+信息: Prepared all plugins
+2014-10-14 17:45:37 jenkins.InitReactorRunner$1 onAttained
+信息: Started all plugins
+2014-10-14 17:45:37 jenkins.InitReactorRunner$1 onAttained
+信息: Augmented all extensions
+2014-10-14 17:45:37 jenkins.InitReactorRunner$1 onAttained
+信息: Loaded all jobs
+2014-10-14 17:45:40 org.jenkinsci.main.modules.sshd.SSHD start
+信息: Started SSHD at port 59447
+2014-10-14 17:45:40 jenkins.InitReactorRunner$1 onAttained
+信息: Completed initialization
+2014-10-14 17:45:40 hudson.TcpSlaveAgentListener <init>
+信息: JNLP slave agent listener started on TCP port 43656
+2014-10-14 17:45:40 hudson.WebAppMain$3 run
+信息: Jenkins is fully up and running
+Effective SlaveRestarter on master: null
+Running from: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkins.war
+webroot: EnvVars.masterEnvVars.get("JENKINS_HOME")
+2014-10-14 17:48:17 winstone.Logger logInternal
+信息: Beginning extraction from war file
+2014-10-14 17:48:17 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: jetty-8.y.z-SNAPSHOT
+2014-10-14 17:48:20 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: NO JSP Support for , did not find org.apache.jasper.servlet.JspServlet
+Jenkins home directory: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkinshome found at: EnvVars.masterEnvVars.get("JENKINS_HOME")
+2014-10-14 17:48:20 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: Started SelectChannelConnector@0.0.0.0:8787
+2014-10-14 17:48:20 winstone.Logger logInternal
+信息: Winstone Servlet Engine v2.0 running: controlPort=disabled
+2014-10-14 17:48:20 jenkins.InitReactorRunner$1 onAttained
+信息: Started initialization
+2014-10-14 17:48:21 jenkins.InitReactorRunner$1 onAttained
+信息: Listed all plugins
+2014-10-14 17:48:21 jenkins.InitReactorRunner$1 onAttained
+信息: Prepared all plugins
+2014-10-14 17:48:21 jenkins.InitReactorRunner$1 onAttained
+信息: Started all plugins
+2014-10-14 17:48:21 jenkins.InitReactorRunner$1 onAttained
+信息: Augmented all extensions
+2014-10-14 17:48:21 jenkins.InitReactorRunner$1 onAttained
+信息: Loaded all jobs
+2014-10-14 17:48:24 org.jenkinsci.main.modules.sshd.SSHD start
+信息: Started SSHD at port 27843
+2014-10-14 17:48:24 jenkins.InitReactorRunner$1 onAttained
+信息: Completed initialization
+2014-10-14 17:48:24 hudson.TcpSlaveAgentListener <init>
+信息: JNLP slave agent listener started on TCP port 42320
+2014-10-14 17:48:24 hudson.WebAppMain$3 run
+信息: Jenkins is fully up and running
+Effective SlaveRestarter on master: null
+2014-10-14 17:48:27 hudson.model.DownloadService$Downloadable load
+信息: Obtained the updated data file for hudson.tasks.Ant.AntInstaller
+2014-10-14 17:48:27 hudson.model.DownloadService$Downloadable load
+信息: Obtained the updated data file for hudson.tasks.Maven.MavenInstaller
+2014-10-14 17:48:28 hudson.model.DownloadService$Downloadable load
+信息: Obtained the updated data file for hudson.tools.JDKInstaller
+2014-10-14 17:48:30 hudson.model.UpdateSite updateData
+信息: Obtained the latest update center data file for UpdateSource default
+Running from: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkins.war
+webroot: EnvVars.masterEnvVars.get("JENKINS_HOME")
+2014-10-14 17:49:06 winstone.Logger logInternal
+信息: Beginning extraction from war file
+2014-10-14 17:49:06 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: jetty-8.y.z-SNAPSHOT
+2014-10-14 17:49:09 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: NO JSP Support for , did not find org.apache.jasper.servlet.JspServlet
+Jenkins home directory: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkinshome found at: EnvVars.masterEnvVars.get("JENKINS_HOME")
+2014-10-14 17:49:09 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: Started SelectChannelConnector@0.0.0.0:8890
+2014-10-14 17:49:09 winstone.Logger logInternal
+信息: Winstone Servlet Engine v2.0 running: controlPort=disabled
+2014-10-14 17:49:10 jenkins.InitReactorRunner$1 onAttained
+信息: Started initialization
+2014-10-14 17:49:10 jenkins.InitReactorRunner$1 onAttained
+信息: Listed all plugins
+2014-10-14 17:49:10 jenkins.InitReactorRunner$1 onAttained
+信息: Prepared all plugins
+2014-10-14 17:49:10 jenkins.InitReactorRunner$1 onAttained
+信息: Started all plugins
+2014-10-14 17:49:10 jenkins.InitReactorRunner$1 onAttained
+信息: Augmented all extensions
+2014-10-14 17:49:10 jenkins.InitReactorRunner$1 onAttained
+信息: Loaded all jobs
+2014-10-14 17:49:13 org.jenkinsci.main.modules.sshd.SSHD start
+信息: Started SSHD at port 57404
+2014-10-14 17:49:13 jenkins.InitReactorRunner$1 onAttained
+信息: Completed initialization
+2014-10-14 17:49:13 hudson.TcpSlaveAgentListener <init>
+信息: JNLP slave agent listener started on TCP port 23581
+2014-10-14 17:49:13 hudson.WebAppMain$3 run
+信息: Jenkins is fully up and running
+Effective SlaveRestarter on master: null
+Running from: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkins.war
+webroot: EnvVars.masterEnvVars.get("JENKINS_HOME")
+2014-10-14 17:50:45 winstone.Logger logInternal
+信息: Beginning extraction from war file
+2014-10-14 17:50:45 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: jetty-8.y.z-SNAPSHOT
+2014-10-14 17:50:48 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: NO JSP Support for , did not find org.apache.jasper.servlet.JspServlet
+Jenkins home directory: /home/users/yangjun03/protobuf/workspace/app-test/search/lbs-stat/upps_test/jenkinsFramework/protobuf/jenkins/jenkinshome found at: EnvVars.masterEnvVars.get("JENKINS_HOME")
+2014-10-14 17:50:48 org.eclipse.jetty.util.log.JavaUtilLog info
+信息: Started SelectChannelConnector@0.0.0.0:8890
+2014-10-14 17:50:48 winstone.Logger logInternal
+信息: Winstone Servlet Engine v2.0 running: controlPort=disabled
+2014-10-14 17:50:48 jenkins.InitReactorRunner$1 onAttained
+信息: Started initialization
+2014-10-14 17:50:49 jenkins.InitReactorRunner$1 onAttained
+信息: Listed all plugins
+2014-10-14 17:50:49 jenkins.InitReactorRunner$1 onAttained
+信息: Prepared all plugins
+2014-10-14 17:50:49 jenkins.InitReactorRunner$1 onAttained
+信息: Started all plugins
+2014-10-14 17:50:49 jenkins.InitReactorRunner$1 onAttained
+信息: Augmented all extensions
+2014-10-14 17:50:49 jenkins.InitReactorRunner$1 onAttained
+信息: Loaded all jobs
+2014-10-14 17:50:52 org.jenkinsci.main.modules.sshd.SSHD start
+信息: Started SSHD at port 36523
+2014-10-14 17:50:52 jenkins.InitReactorRunner$1 onAttained
+信息: Completed initialization
+2014-10-14 17:50:52 hudson.TcpSlaveAgentListener <init>
+信息: JNLP slave agent listener started on TCP port 44140
+2014-10-14 17:50:52 hudson.WebAppMain$3 run
+信息: Jenkins is fully up and running
+Effective SlaveRestarter on master: null
+2014-10-14 17:59:53 hudson.model.AsyncPeriodicWork$1 run
+信息: Started Download metadata
+2014-10-14 17:59:53 hudson.model.AsyncPeriodicWork$1 run
+信息: Finished Download metadata. 0 ms

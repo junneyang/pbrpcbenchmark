@@ -25,7 +25,6 @@
 #include <google/protobuf/generated_message_reflection.h>
 #include <google/protobuf/service.h>
 #include "pbrpc.pb.h"
-#include "transport.pb.h"
 #include "regist_condition.pb.h"
 // @@protoc_insertion_point(includes)
 
@@ -85,6 +84,14 @@ class UserService : public ::google::protobuf::Service {
                        const ::lbs::da::openservice::GetNearPoiRequest* request,
                        ::lbs::da::openservice::GetNearPoiResponse* response,
                        ::google::protobuf::Closure* done);
+  virtual void GetBuy2BuyInfo(::google::protobuf::RpcController* controller,
+                       const ::lbs::da::openservice::NuomiBuy2BuyRequest* request,
+                       ::lbs::da::openservice::NuomiBuy2BuyResponse* response,
+                       ::google::protobuf::Closure* done);
+  virtual void POIMatch(::google::protobuf::RpcController* controller,
+                       const ::lbs::da::openservice::POIMatchRequest* request,
+                       ::lbs::da::openservice::POIMatchResponse* response,
+                       ::google::protobuf::Closure* done);
   
   // implements Service ----------------------------------------------
   
@@ -141,6 +148,14 @@ class UserService_Stub : public UserService {
   void GetNearPoiInfo(::google::protobuf::RpcController* controller,
                        const ::lbs::da::openservice::GetNearPoiRequest* request,
                        ::lbs::da::openservice::GetNearPoiResponse* response,
+                       ::google::protobuf::Closure* done);
+  void GetBuy2BuyInfo(::google::protobuf::RpcController* controller,
+                       const ::lbs::da::openservice::NuomiBuy2BuyRequest* request,
+                       ::lbs::da::openservice::NuomiBuy2BuyResponse* response,
+                       ::google::protobuf::Closure* done);
+  void POIMatch(::google::protobuf::RpcController* controller,
+                       const ::lbs::da::openservice::POIMatchRequest* request,
+                       ::lbs::da::openservice::POIMatchResponse* response,
                        ::google::protobuf::Closure* done);
  private:
   ::google::protobuf::RpcChannel* channel_;
@@ -213,65 +228,6 @@ class ItemService_Stub : public ItemService {
   ::google::protobuf::RpcChannel* channel_;
   bool owns_channel_;
   GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(ItemService_Stub);
-};
-
-
-// -------------------------------------------------------------------
-
-class TransportFileService_Stub;
-
-class TransportFileService : public ::google::protobuf::Service {
- protected:
-  // This class should be treated as an abstract interface.
-  inline TransportFileService() {};
- public:
-  virtual ~TransportFileService();
-  
-  typedef TransportFileService_Stub Stub;
-  
-  static const ::google::protobuf::ServiceDescriptor* descriptor();
-  
-  virtual void TransportFile(::google::protobuf::RpcController* controller,
-                       const ::lbs::da::openservice::TransportFileRequest* request,
-                       ::lbs::da::openservice::TransportFileResponse* response,
-                       ::google::protobuf::Closure* done);
-  
-  // implements Service ----------------------------------------------
-  
-  const ::google::protobuf::ServiceDescriptor* GetDescriptor();
-  void CallMethod(const ::google::protobuf::MethodDescriptor* method,
-                  ::google::protobuf::RpcController* controller,
-                  const ::google::protobuf::Message* request,
-                  ::google::protobuf::Message* response,
-                  ::google::protobuf::Closure* done);
-  const ::google::protobuf::Message& GetRequestPrototype(
-    const ::google::protobuf::MethodDescriptor* method) const;
-  const ::google::protobuf::Message& GetResponsePrototype(
-    const ::google::protobuf::MethodDescriptor* method) const;
-
- private:
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(TransportFileService);
-};
-
-class TransportFileService_Stub : public TransportFileService {
- public:
-  TransportFileService_Stub(::google::protobuf::RpcChannel* channel);
-  TransportFileService_Stub(::google::protobuf::RpcChannel* channel,
-                   ::google::protobuf::Service::ChannelOwnership ownership);
-  ~TransportFileService_Stub();
-  
-  inline ::google::protobuf::RpcChannel* channel() { return channel_; }
-  
-  // implements TransportFileService ------------------------------------------
-  
-  void TransportFile(::google::protobuf::RpcController* controller,
-                       const ::lbs::da::openservice::TransportFileRequest* request,
-                       ::lbs::da::openservice::TransportFileResponse* response,
-                       ::google::protobuf::Closure* done);
- private:
-  ::google::protobuf::RpcChannel* channel_;
-  bool owns_channel_;
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(TransportFileService_Stub);
 };
 
 

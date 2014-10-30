@@ -40,6 +40,7 @@ void *requestthread(void *data) {
 	//int send_threadnum = args->send_threadnum;
 	//int client_num = args->client_num;
 	int send_rate = args->send_rate;
+	int is_random = args->is_random;
 	double test_time = args->test_time;
 	int is_output = args->is_output;
 	string testdata = args->testdata;
@@ -59,36 +60,101 @@ void *requestthread(void *data) {
 	int avg_interval = (1000*1000)/(send_rate);
 	int interval;
 	long current = getCurrentTimeInMSec();
-	vector<string> filestr_array = split_string(testdata, "##########");
-	string current_reqstr;
-	if (filestr_array.size() == 1) {
-		while(current <= end){
-			long tmp_start = getCurrentTimeInUSec();
-			for (iter = rpc_channels.begin(); iter != last; ++iter) {
-				async_request(*iter, pbrpc_type, service_name, method, is_output, testdata);
-			}
-			long tmp_end = getCurrentTimeInUSec();
-			interval = avg_interval - tmp_end + tmp_start;
-			if (interval > 0) {
-				microseconds_sleep(interval);
-			}
-			current = getCurrentTimeInMSec();
-		}
-	} else {
-		while(current <= end){
-			long tmp_start = getCurrentTimeInUSec();
-			current_reqstr = get_randomdata(filestr_array);
-			for (iter = rpc_channels.begin(); iter != last; ++iter) {
-				async_request(*iter, pbrpc_type, service_name, method, is_output, current_reqstr);
-			}
-			long tmp_end = getCurrentTimeInUSec();
-			interval = avg_interval - tmp_end + tmp_start;
-			if (interval > 0) {
-				microseconds_sleep(interval);
-			}
-			current = getCurrentTimeInMSec();
-		}
+	/*vector<string> filestr_array = split_string(testdata, "##########");
+	int filestr_array_size = filestr_array.size();*/
+	/*Document d;
+	d.Parse(testdata.c_str());*/
+	
+	Json::Reader reader;
+	Json::Value jsondata;
+	if (!reader.parse(testdata, jsondata, false)) { 
+		return NULL; 
 	}
+	int filestr_array_size = jsondata.size();
+	int index = 0;
+	
+	string current_reqstr;
+	string current_expjson;
+	if (filestr_array_size == 1) {
+		SizeType i_index = (SizeType)index;
+		current_reqstr = jsondata[index]["input"].toStyledString();
+		
+		/*Value &ss = d[i_index]["expect"];
+		StringBuffer buffer2;
+		Writer<StringBuffer> writer2(buffer2);
+		ss.Accept(writer2);
+		current_expjson = buffer2.GetString();*/
+		current_expjson = jsondata[index]["expect"].toStyledString();
+		
+		while(current <= end){
+			long tmp_start = getCurrentTimeInUSec();
+			for (iter = rpc_channels.begin(); iter != last; ++iter) {
+				async_request(*iter, pbrpc_type, service_name, method, is_output, current_reqstr, current_expjson);
+			}
+			long tmp_end = getCurrentTimeInUSec();
+			interval = avg_interval - tmp_end + tmp_start;
+			if (interval > 0) {
+				microseconds_sleep(interval);
+			}
+			current = getCurrentTimeInMSec();
+		}
+	} else if ( filestr_array_size != 1 && is_random == 1){
+		while(current <= end){
+			long tmp_start = getCurrentTimeInUSec();
+			srand((int) time(0));
+			index = rand() % filestr_array_size;
+			
+			SizeType i_index = (SizeType)index;
+			current_reqstr = jsondata[index]["input"].toStyledString();
+			
+			/*Value &ss = d[i_index]["expect"];
+			StringBuffer buffer2;
+			Writer<StringBuffer> writer2(buffer2);
+			ss.Accept(writer2);
+			current_expjson = buffer2.GetString();*/
+			current_expjson = jsondata[index]["expect"].toStyledString();
+			
+			for (iter = rpc_channels.begin(); iter != last; ++iter) {
+				async_request(*iter, pbrpc_type, service_name, method, is_output, current_reqstr, current_expjson);
+			}
+			long tmp_end = getCurrentTimeInUSec();
+			interval = avg_interval - tmp_end + tmp_start;
+			if (interval > 0) {
+				microseconds_sleep(interval);
+			}
+			current = getCurrentTimeInMSec();
+		}
+	} else if ( filestr_array_size != 1 && is_random == 0){
+		int tmp_index = 0;
+		while(current <= end){
+			long tmp_start = getCurrentTimeInUSec();
+			
+			SizeType i_index = (SizeType)tmp_index;
+			current_reqstr = jsondata[tmp_index]["input"].toStyledString();
+			
+			/*Value &ss = d[i_index]["expect"];
+			StringBuffer buffer2;
+			Writer<StringBuffer> writer2(buffer2);
+			ss.Accept(writer2);
+			current_expjson = buffer2.GetString();*/
+			current_expjson = jsondata[tmp_index]["expect"].toStyledString();
+			
+			if (tmp_index != filestr_array_size - 1) {
+				tmp_index += 1;
+			} else {
+				tmp_index = 0;
+			}
+			for (iter = rpc_channels.begin(); iter != last; ++iter) {
+				async_request(*iter, pbrpc_type, service_name, method, is_output, current_reqstr, current_expjson);
+			}
+			long tmp_end = getCurrentTimeInUSec();
+			interval = avg_interval - tmp_end + tmp_start;
+			if (interval > 0) {
+				microseconds_sleep(interval);
+			}
+			current = getCurrentTimeInMSec();
+		}
+	} 
 	return NULL;
 }
 

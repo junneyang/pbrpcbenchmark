@@ -86,6 +86,8 @@ message GetRegularStayPointRequest {
 	required RequestHeader header = 1;
 	required string cuid = 2;
 	repeated UserTrajStatus type = 3; //指定类型
+	optional double x = 4;
+	optional double y = 5;
 }
 
 message GetRegularStayPointResponse {
@@ -298,10 +300,12 @@ message LvTripPlanResponse {
 	repeated Arg args = 14;
 }
 
+
 //place semantic
 message WifiFinger {
-    required string mac_addr = 1;   //mac地址
-    required int32 strength = 2;      //信号强度
+    optional string mac_addr = 1;   //string格式mac地址， 和int格式设置一个即可
+    optional int64  int_mac = 2;    //int64格式的地址
+    required int32 strength = 3;      //信号强度
 }
 message PlaceSemanticRequest {
     required RequestHeader header = 1;
@@ -309,17 +313,29 @@ message PlaceSemanticRequest {
     optional double longitude = 3;  //经度
     optional double latitude = 4;   //维度	
 	optional string cuid = 5;
-	optional int32 distance = 6;     //查询距离
+	optional int32 accuracy = 6;     //经维度半径精度
 	optional double similarity_threadhold = 7;   //相似度阈值
-	optional string algorithm_id = 8;
+	optional int32 topn  = 8;        //返回相似度最高的TOP N个POI， 默认1
 }
 message PoiProbability {
     required string poi = 1;        //poi
     required double probability = 2;    //概率，0-1
 }
 message PlaceSemanticResponse {
-    repeated string aoi_id = 1;             //aoi值
+    //repeated string aoi_id = 1;            
     repeated PoiProbability poi_prob_list = 2;        
+}
+
+
+message POIMatchRequest {
+    required RequestHeader header = 1;
+    repeated uint64 wifi_finger = 2;   //wifi指纹列表, 一个int64表示 (mac<<8+ strength) 
+	repeated string pois = 3;
+	repeated int32 match_finger_offsets = 5;
+	repeated int32 match_finger_counts = 6;
+}
+message POIMatchResponse {
+    repeated PoiProbability probabilities = 1;        
 }
 
 //nuomi userpreference
@@ -429,3 +445,52 @@ message GetNearPoiResponse{
     repeated PoiInfo poi_list = 1;
 }
 
+message NuomiBuy2BuyRequest {
+	// 糯米买了又买请求包，支持用户偏好、常驻点、商户关联，组合偏好请求
+	required RequestHeader header = 1;       // 头部信息，框架控制用
+	// 用户偏好子请求，用于支持用户偏好、常驻点
+	optional NuomiUserPreferenceRequest user_preference_req = 2;
+	// 商户关联子请求， 用于支持商户关联，组合偏好
+	optional NuomiMerchantItemRequest mert_req = 3;
+}
+
+message NuomiBuy2BuyResponse {
+	optional int32 status = 1;                       // 请求结果返回码，
+	optional bytes err_str = 2;                      // 出粗时的可视化信息
+	// 用户偏好、常驻点的返回包
+	optional NuomiUserPreferenceResponse user_preference_rsp = 3;
+	// 支持商户关联，组合偏好的返回包。
+	// 其中如果商户关联和组合偏好同时请求，商户关联放在推荐前面，组合偏好放在后面，args字段标出分界
+	optional GetBNItemsResponse mert_rsp = 4;
+}
+
+
+message NuomiMerchantItemRequest {
+
+	required RequestHeader header = 1;       // 头部信息，框架控制用
+	// 来源
+	optional int32 source = 2;               // 来源 0为app 1为pc
+	optional bytes userid = 3;               // 用户id，目前还未用到
+
+	optional bytes algorithmId = 4;          // 算法id，请求算法用
+	optional int32 limit = 5;                // 请求返回的最大Item数，控制返回结果个数；如果不设置或者<1，即不控制，全量返回
+	// 前件团单信息，即(T,S,N)三元组
+	optional int64 deal_id = 6;              // 当前用户关注的团单，详情页下是当前页面团单，验单情况下是用户当前验的团单
+	repeated int64 merchant_id = 7;          // 当前用户下关注的商户，详情页下是当前页面团单对应的商户，验单情况下是用户当前验的商户
+										 	 // 详情页下的商户列表可以不给出
+	optional int32 deal_num = 8;             // 当前用户关注的团单的数量，验单情况下用户验的单数
+	//用户位置信息
+	optional bytes coor_sys = 9;             // 坐标体系，（确定是采用摩卡托还是百度经纬度？）
+	optional float x = 10;                   // 对应为na端时，摩卡托坐标x
+	optional float y = 11;                   // 对应为na端时，摩卡托坐标y
+	optional int64 area_id = 12;             // 对应pc或者na端，用户所在的城市id
+	// 用户筛选分类信息
+	repeated int64 vec_catg = 13;            // 一级分类
+	repeated int64 vec_subcatg = 14;         // 二级分类
+	repeated int64 vec_thdcatg = 15;         // 三级分类
+	// 用户筛选区域信息
+	repeated int64 vec_shop_dist = 16;       // 行政区
+	repeated int64 vec_shop_range = 17;      // 商圈
+	// 扩展字段
+	repeated Arg args = 18;
+}

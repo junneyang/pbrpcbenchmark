@@ -41,6 +41,7 @@ typedef struct _params {
 	int send_threadnum;
 	int client_num;
 	int send_rate;
+	int is_random;
 	double test_time;
 	int is_output;
 	string testdata;

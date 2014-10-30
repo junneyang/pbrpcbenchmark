@@ -28,7 +28,7 @@ IDLFLAGS('--compack')
 UBRPCFLAGS('--compack')
 
 #头文件路径.
-INCPATHS('. ./proto ./src')
+INCPATHS('. ./proto ./src ./com/rapidjson-master/include ./com/jsoncpp-src-0.5.0/include')
 
 #使用库
 #LIBS('')
@@ -60,6 +60,8 @@ proto_headers = GLOB('./proto/*.h')
 src_sources = GLOB('./src/*.cpp')
 src_headers = GLOB('./src/*.h')
 
+json_src_sources = GLOB('./com/jsoncpp-src-0.5.0/src/lib_json/*.cpp')
+
 #静态库
 #StaticLibrary('pbrpcpress',Sources(user_sources),HeaderFiles(user_headers))
 #共享库
@@ -69,6 +71,7 @@ src_headers = GLOB('./src/*.h')
 #Application("write",Sources("./src/write.cpp", proto_sources), OutputPath(''))
 #Application("read",Sources("./src/read.cpp", proto_sources), OutputPath(''))
 #Application("descripter",Sources("./src/descripter.cpp", proto_sources), OutputPath(''))
-Application("pbrpcclient",Sources("./src/pbrpcclient.cpp", "./src/common.cpp", proto_sources), OutputPath(''))
-Application("pbrpcbenchmark",Sources("./src/pbrpcbenchmark.cpp", "./src/common.cpp", "./src/requestthreadpool.cpp", proto_sources), OutputPath(''))
+#Application("jsontest",Sources("./src/jsontest.cpp", "./src/common.cpp", proto_sources), OutputPath(''))
+Application("pbrpcclient",Sources("./src/pbrpcclient.cpp", "./src/common.cpp", proto_sources, json_src_sources), OutputPath(''))
+Application("pbrpcbenchmark",Sources("./src/pbrpcbenchmark.cpp", "./src/common.cpp", "./src/requestthreadpool.cpp", proto_sources, json_src_sources), OutputPath(''))
 
