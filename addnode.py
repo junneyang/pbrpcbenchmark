@@ -26,13 +26,6 @@ def addnode(jenkinsurl, nodename, remote_fs, ip, port, username, password):
         time.sleep(1)
 
 if __name__ == '__main__':
-    '''jenkinsurl = 'http://10.48.55.39:8898/'
-    nodename = 'da02'
-    remote_fs = '/home/map/workspace'
-    ip = '10.99.36.61'
-    port = 22
-    username = 'map'
-    password = 'mapapptest' '''
     try:
         jenkinsurl = sys.argv[1]
         nodename = sys.argv[2]
