@@ -5,7 +5,7 @@ from urllib import urlencode
 import re, os, traceback
 
 class uuapLib(object):
-    def __init__(self, username, password, url="https://uuap.baidu.com/", service="your-service"):
+    def __init__(self, username, password, url="https://xxx..com/", service="your-service"):
         self.url = url.rstrip("/")
         self.username = username
         self.password = password

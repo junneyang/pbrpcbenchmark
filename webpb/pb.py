@@ -29,8 +29,8 @@ import urllib
 #CAS setting
 CAS_SETTINGS = {
 	#replace this with your cas server url
-	#'cas_server' : 'https://uuap.baidu.com/',
-    'cas_server' : 'http://itebeta.baidu.com:8100',
+	#'cas_server' : 'https://xx.com/',
+    'cas_server' : 'http://xxx.com:8100',
 
 	#replace this with your website url
 	'service_url' : "http://"+hostname+":"+str(defaultport)+"/pb/",
